@@ -1,0 +1,11 @@
+[workspace]
+members = [
+    "roqoqo-aqt",
+    "qoqo_aqt",
+]
+
+[profile.release]
+lto = true
+
+[profile.bench]
+lto = true
