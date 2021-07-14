@@ -13,3 +13,5 @@
 #[cfg(test)]
 mod backend;
 pub use backend::*;
+mod devices;
+pub use devices::*;
