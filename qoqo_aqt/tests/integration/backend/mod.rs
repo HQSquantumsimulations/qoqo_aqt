@@ -14,14 +14,14 @@
 
 use pyo3::prelude::*;
 use pyo3::Python;
-use qoqo::CircuitWrapper;
 use qoqo::measurements::ClassicalRegisterWrapper;
+use qoqo::CircuitWrapper;
 use qoqo_aqt::devices;
 use qoqo_aqt::BackendWrapper;
+use roqoqo::measurements::ClassicalRegister;
 use roqoqo::operations;
 use roqoqo::Circuit;
 use std::env;
-use roqoqo::measurements::ClassicalRegister;
 
 #[test]
 fn test_creating_backend() {
@@ -113,8 +113,13 @@ fn test_running_measurement() {
     circuit += operations::RotateZ::new(0, 2.0.into());
     circuit += operations::MolmerSorensenXX::new(0, 1);
     circuit += operations::PragmaRepeatedMeasurement::new("readout".to_string(), None, 100);
-    let cr_measurement = ClassicalRegister{constant_circuit:None, circuits: vec![circuit]};
-    let crm_wrapper = ClassicalRegisterWrapper{internal: cr_measurement};
+    let cr_measurement = ClassicalRegister {
+        constant_circuit: None,
+        circuits: vec![circuit],
+    };
+    let crm_wrapper = ClassicalRegisterWrapper {
+        internal: cr_measurement,
+    };
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
         Python::with_gil(|py| -> () {
             let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
