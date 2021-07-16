@@ -106,7 +106,12 @@ impl EvaluatingBackend for Backend {
         let mut complex_registers: HashMap<String, ComplexOutputRegister> = HashMap::new();
 
         let mut instruction_vec: Vec<AqtInstruction> = Vec::new();
-        let client = reqwest::blocking::Client::new();
+        let client = reqwest::blocking::Client::builder()
+            .https_only(true)
+            .build()
+            .map_err(|x| RoqoqoBackendError::NetworkError {
+                msg: format!("could not create https client {:?}", x),
+            })?;
         let mut number_measurements: usize = 0;
         let mut readout: String = "".to_string();
         for op in circuit {
