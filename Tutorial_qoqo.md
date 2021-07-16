@@ -1,6 +1,6 @@
 # A quick Tutorial how to use qoqo_aqt
 
-qoqo_aqt provides a backend to the AQT quantum devices and simulators for the qoqo quantum computing toolikt by HQS.
+qoqo_aqt provides a backend to the AQT quantum devices and simulators for the qoqo quantum computing toolkit by HQS.
 
 [qoqo is hosted on github](https://github.com/HQSquantumsimulations/qoqo)
 
@@ -14,7 +14,7 @@ qoqo_aqt provides a backend to the AQT quantum devices and simulators for the qo
 
 ## Installation
 
-On Linux and macOS on x86 precompiled packages can be found on PyPi and installed via
+On Linux and macOS on x86, precompiled packages can be found on PyPi and installed via
 
 ```shell
 pip install qoqo
@@ -23,7 +23,7 @@ pip install qoqo_aqt
 
 For other platforms we recommend checking out the latest tagged version from github and using the [maturin](https://github.com/PyO3/maturin) tool to build a python package for qoqo locally and install it via pip.
 Please note that the package should be built from the top level directory of the workspace selecting the qoqo package with the `-m qoqo/Cargo.toml` option.
-Specifically for macOS on Apple Silicon the following build command should be used.
+Specifically for macOS on Apple Silicon the following build command should be used:
 
 ```shell
 cd qoqo
@@ -70,7 +70,7 @@ For example a circuit to create the bell state of two qubits
 |bell-state> = 1/sqrt(2)(|00> + i |11>)
 ```
 
-and measure the two qubits can be defined with
+and measure the two qubits can be defined with:
 
 ```python
 from qoqo import Circuit
@@ -82,7 +82,7 @@ circuit += ops.MolmerSorensenXX(control=0, target=1)  # Quantum operations
 circuit += ops.PragmaRepeatedMeasurement(readout="readout", number_measurements=100)  # Measuring qubits
 ```
 
-The circuit can be run with
+The circuit can be run with:
 
 ```python
 from qoqo_aqt import devices, Backend
@@ -106,7 +106,7 @@ The first calls the noisy free simulator
 url = "https://gateway.aqt.eu/marmot/sim/"
 ```
 
-The second one a simulator with a noise model
+The second one calls a simulator with a noise model
 
 ```
 url = "https://gateway.aqt.eu/marmot/sim/noise-model-1"
