@@ -1,6 +1,6 @@
 # A quick Tutorial how to use roqoqo-aqt
 
-roqoqo-aqt provides a backend to the AQT quantum devices and simulators for the qoqo quantum computing toolikt by HQS.
+roqoqo-aqt provides a backend to the AQT quantum devices and simulators for the qoqo quantum computing toolkit by HQS.
 
 [roqoqo is hosted on github](https://github.com/HQSquantumsimulations/qoqo)
 
@@ -56,7 +56,7 @@ For example a circuit to create the bell state of two qubits
 |bell-state> = 1/sqrt(2)(|00> + i |11>)
 ```
 
-and measure the two qubits can be defined with
+and measure the two qubits can be defined with:
 
 ```rust
 use roqoqo::operations;
@@ -68,7 +68,7 @@ circuit += operations::MolmerSorensenXX::new(0, 1); // Quantum operation
 circuit += operations::PragmaRepeatedMeasurement::new("readout".to_string(), None, 100); // Measuring qubits
 ```
 
-The circuit can be run with
+The circuit can be run with:
 
 ```rust
 use roqoqo::backends::EvaluatingBackend;
@@ -95,7 +95,7 @@ The first calls the noisy free simulator
 url = "https://gateway.aqt.eu/marmot/sim/"
 ```
 
-The second one a simulator with a noise model
+The second one calls a simulator with a noise model
 
 ```
 url = "https://gateway.aqt.eu/marmot/sim/noise-model-1"
