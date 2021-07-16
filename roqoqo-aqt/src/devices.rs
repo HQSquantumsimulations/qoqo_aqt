@@ -22,6 +22,8 @@
 pub enum AqtDevice {
     /// AQT online simulator
     SimulatorDevice(SimulatorDevice),
+    /// AQT online simulator with noise model
+    NoisySimulatorDevice(NoisySimulatorDevice),
 }
 
 impl AqtDevice {
@@ -29,6 +31,7 @@ impl AqtDevice {
     pub fn number_qubits(&self) -> usize {
         match self {
             AqtDevice::SimulatorDevice(x) => x.number_qubits(),
+            AqtDevice::NoisySimulatorDevice(x) => x.number_qubits(),
         }
     }
 
@@ -36,6 +39,7 @@ impl AqtDevice {
     pub fn remote_host(&self) -> &str {
         match self {
             AqtDevice::SimulatorDevice(x) => x.remote_host(),
+            AqtDevice::NoisySimulatorDevice(x) => x.remote_host(),
         }
     }
 }
@@ -79,5 +83,47 @@ impl SimulatorDevice {
     /// Returns the remote_host url endpoint of the device
     pub fn remote_host(&self) -> &str {
         "https://gateway.aqt.eu/marmot/sim/"
+    }
+}
+
+/// AQT noisy quantum simulator device
+///
+/// Provides endpoint that receives instructions that are simulated and returns measurement results.
+#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize)]
+pub struct NoisySimulatorDevice {
+    /// Number of qubits supported by the device
+    pub number_qubits: usize,
+}
+
+impl NoisySimulatorDevice {
+    /// Create new simulator device
+    ///
+    /// # Arguments
+    ///
+    /// `number_qubits` - Number of qubits that should be simulated
+    pub fn new(number_qubits: usize) -> Self {
+        Self { number_qubits }
+    }
+
+    /// Returns the number of qubits in the device.
+    pub fn number_qubits(&self) -> usize {
+        self.number_qubits
+    }
+
+    /// Returns the remote_host url endpoint of the device
+    pub fn remote_host(&self) -> &str {
+        "https://gateway.aqt.eu/marmot/sim/noise-model-1"
+    }
+}
+
+impl From<&NoisySimulatorDevice> for AqtDevice {
+    fn from(input: &NoisySimulatorDevice) -> Self {
+        Self::NoisySimulatorDevice(input.clone())
+    }
+}
+
+impl From<NoisySimulatorDevice> for AqtDevice {
+    fn from(input: NoisySimulatorDevice) -> Self {
+        Self::NoisySimulatorDevice(input)
     }
 }
