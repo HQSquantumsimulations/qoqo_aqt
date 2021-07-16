@@ -21,7 +21,7 @@ This repository contains two components:
 
 AQT-backend for the qoqo quantum toolkit by [HQS Quantum Simulations](https://quantumsimulations.de).
 
-
+A short tutorial can be found in Tutorial_qoqo.md in the git repository.
 
 ### Installation
 
@@ -48,6 +48,8 @@ pip install target/wheels/$NAME_OF_WHEEL
 ![Crates.io](https://img.shields.io/crates/l/roqoqo-aqt)
 
 AQT-Backend for the roqoqo quantum toolkit by [HQS Quantum Simulations](https://quantumsimulations.de).
+
+A short tutorial can be found in Tutorial_roqoqo.md in the git repository.
 
 ## General Notes
 

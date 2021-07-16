@@ -12,7 +12,7 @@
 
 use roqoqo::prelude::*;
 use roqoqo::{operations::*, Circuit};
-use roqoqo_aqt::devices::SimulatorDevice;
+use roqoqo_aqt::devices::{NoisySimulatorDevice, SimulatorDevice};
 use roqoqo_aqt::Backend;
 use roqoqo_test::prepare_monte_carlo_gate_test;
 use std::env;
@@ -27,6 +27,21 @@ fn init_backend() {
         let ok = Backend::new(device.into(), None).is_err();
         assert!(ok);
         let device = SimulatorDevice::new(2);
+        let ok = Backend::new(device.into(), Some("dummy_access_token".to_string())).is_ok();
+        assert!(ok);
+    }
+}
+
+#[test]
+fn init_backend_noisy() {
+    if env::var("AQT_ACCESS_TOKEN").is_ok() {
+        let device = NoisySimulatorDevice::new(2);
+        let _backend = Backend::new(device.into(), None).unwrap();
+    } else {
+        let device = NoisySimulatorDevice::new(2);
+        let ok = Backend::new(device.into(), None).is_err();
+        assert!(ok);
+        let device = NoisySimulatorDevice::new(2);
         let ok = Backend::new(device.into(), Some("dummy_access_token".to_string())).is_ok();
         assert!(ok);
     }
