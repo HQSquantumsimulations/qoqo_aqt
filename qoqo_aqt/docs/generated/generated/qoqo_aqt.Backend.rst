@@ -1,0 +1,28 @@
+qoqo\_aqt.Backend
+=================
+
+.. currentmodule:: qoqo_aqt
+
+.. autoclass:: Backend
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Backend.__init__
+      ~Backend.from_bincode
+      ~Backend.from_json
+      ~Backend.run_circuit
+      ~Backend.run_measurement_registers
+      ~Backend.to_bincode
+      ~Backend.to_json
+   
+   
+
+   
+   
+   

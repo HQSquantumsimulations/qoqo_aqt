@@ -17296,7 +17296,7 @@ Quantum computing circuit toolkit. Python interface of roqoq
 License: Apache-2.0
 
 ====================================================
-qoqo-aqt 0.1.0
+qoqo-aqt 0.1.1
 https://github.com/HQSquantumsimulations/qoqo_aqt
 by HQS Quantum Simulations <info@quantumsimulations.de>
 AQT backend for qoqo quantum computing toolkit
@@ -19312,7 +19312,7 @@ Rust Quantum Computing Toolkit by HQS
 License: Apache-2.0
 
 ====================================================
-roqoqo-aqt 0.1.0
+roqoqo-aqt 0.1.1
 https://github.com/HQSquantumsimulations/qoqo_aqt
 by HQS Quantum Simulations <info@quantumsimulations.de>
 AQT interface for roqoqo rust quantum computing toolkit

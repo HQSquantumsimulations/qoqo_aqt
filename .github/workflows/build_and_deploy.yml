@@ -24,29 +24,29 @@ jobs:
         sleep 30
         cargo publish --manifest-path=qoqo_aqt/Cargo.toml
 
-  deploy_pypi_manylinux:
-      needs: deploy_cratesio
-      runs-on: ubuntu-latest
-      #container: konstin2/maturin
-      steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          echo $GITHUB_WORKSPACE
-      - name: Build Manylinux Maturin
-        uses: addnab/docker-run-action@v3
-        with:
-          image: konstin2/maturin
-          options: -v /home/runner/work/qoqo_aqt/qoqo_aqt:/io
-          run: maturin build -m qoqo_aqt/Cargo.toml --release --manylinux 2010
-      - name: Publish
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          python -m pip install --upgrade pip
-          pip install twine
-          python -m twine upload target/wheels/*
+  # deploy_pypi_manylinux:
+  #     needs: deploy_cratesio
+  #     runs-on: ubuntu-latest
+  #     #container: konstin2/maturin
+  #     steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Install dependencies
+  #       run: |
+  #         echo $GITHUB_WORKSPACE
+  #     - name: Build Manylinux Maturin
+  #       uses: addnab/docker-run-action@v3
+  #       with:
+  #         image: konstin2/maturin
+  #         options: -v /home/runner/work/qoqo_aqt/qoqo_aqt:/io
+  #         run: maturin build -m qoqo_aqt/Cargo.toml --release --manylinux 2010
+  #     - name: Publish
+  #       env:
+  #         TWINE_USERNAME: __token__
+  #         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+  #       run: |
+  #         python -m pip install --upgrade pip
+  #         pip install twine
+  #         python -m twine upload target/wheels/*
 
   deploy_macos:
       needs: deploy_cratesio
