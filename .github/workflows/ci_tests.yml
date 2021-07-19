@@ -50,7 +50,6 @@ jobs:
       - run: cargo fmt --all -- --check
 
   deploy_pypi_manylinux:
-      needs: deploy_cratesio
       runs-on: ubuntu-latest
       #container: konstin2/maturin
       steps:
