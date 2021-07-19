@@ -14,12 +14,15 @@ qoqo_aqt provides a backend to the AQT quantum devices and simulators for the qo
 
 ## Installation
 
-On Linux and macOS on x86, precompiled packages can be found on PyPi and installed via
+On macOS on x86, precompiled packages can be found on PyPi and installed via
 
 ```shell
 pip install qoqo
 pip install qoqo_aqt
 ```
+
+At the moment an issue with building manylinux python wheels with openssl support prevents us from distributing precompiled packages for linux. 
+For now please use the same method as for other platforms to install qoqo_aqt on linux.
 
 For other platforms we recommend checking out the latest tagged version from github and using the [maturin](https://github.com/PyO3/maturin) tool to build a python package for qoqo locally and install it via pip.
 Please note that the package should be built from the top level directory of the workspace selecting the qoqo package with the `-m qoqo/Cargo.toml` option.

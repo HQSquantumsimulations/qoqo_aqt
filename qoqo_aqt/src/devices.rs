@@ -178,10 +178,10 @@ pub fn convert_into_device(input: &PyAny) -> Result<AqtDevice, QoqoBackendError>
     deserialize(&bytes[..]).map_err(|_| QoqoBackendError::CannotExtractObject)
 }
 
-// AQT quantum simulator device with noise model
+/// AQT quantum simulator device with noise model
 ///
 /// Provides endpoint that receives instructions that are simulated and returns measurement results.
-#[pyclass(name = "SimulatorDevice", module = "qoqo_aqt")]
+#[pyclass(name = "NoisySimulatorDevice", module = "qoqo_aqt")]
 #[derive(Clone, Debug, PartialEq)]
 pub struct NoisySimulatorDeviceWrapper {
     /// Internal storage of [roqoqo_aqt::SimulatorDevice]
@@ -201,7 +201,7 @@ impl NoisySimulatorDeviceWrapper {
         }
     }
 
-    /// Return a copy of the SimulatorDevice (copy here produces a deepcopy).
+    /// Return a copy of the NoisySimulatorDevice (copy here produces a deepcopy).
     ///
     /// Returns:
     ///     SimulatorDevice: A deep copy of self.
@@ -209,7 +209,7 @@ impl NoisySimulatorDeviceWrapper {
         self.clone()
     }
 
-    /// Return a deep copy of the SimulatorDevice.
+    /// Return a deep copy of the NoisySimulatorDevice.
     ///
     /// Returns:
     ///     SimulatorDevice: A deep copy of self.
@@ -334,9 +334,11 @@ impl NoisySimulatorDeviceWrapper {
 ///    :toctree: generated/
 ///
 ///    SimulatorDevice
+///    NoisySimulatorDevice
 ///
 #[pymodule]
 pub fn devices(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_class::<SimulatorDeviceWrapper>()?;
+    m.add_class::<NoisySimulatorDeviceWrapper>()?;
     Ok(())
 }

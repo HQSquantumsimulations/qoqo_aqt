@@ -24,9 +24,9 @@ use roqoqo_aqt::devices::AqtDevice;
 use roqoqo_aqt::Backend;
 use std::collections::HashMap;
 
-/// Circuit of Operations.
+/// AQT backend
 ///
-/// A quantum program is represented as a linear sequence of Operations.
+/// provides functions to run circuits and measurements on AQT devices.
 #[pyclass(name = "Backend", module = "qoqo_aqt")]
 #[derive(Clone, Debug, PartialEq)]
 pub struct BackendWrapper {

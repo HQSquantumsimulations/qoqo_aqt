@@ -6,7 +6,6 @@ target/*
 *.coverage
 *coveragehtml/*
 */docs/_build*
-*/docs/generated*
 *.DS_Store
 *.ipynb_checkpoints*
 *.json
