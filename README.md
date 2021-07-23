@@ -13,7 +13,7 @@ This repository contains two components:
 
 ## qoqo_aqt
 
-[![Documentation Status](https://readthedocs.org/projects/qoqo_aqt/badge/?version=latest)](https://qoqo_aqt.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://img.shields.io/badge/docs-documentation-green)](https://hqsquantumsimulations.github.io/qoqo_aqt/)
 [![GitHub Workflow Status](https://github.com/HQSquantumsimulations/qoqo_aqt/workflows/ci_tests/badge.svg)](https://github.com/HQSquantumsimulations/qoqo_aqt/actions)
 [![PyPI](https://img.shields.io/pypi/v/qoqo_aqt)](https://pypi.org/project/qoqo_aqt/)
 ![PyPI - License](https://img.shields.io/pypi/l/qoqo_aqt)
@@ -31,7 +31,7 @@ On  macOS on x86 precompiled packages can be found on PyPi and installed via
 pip install qoqo_aqt
 ```
 
-At the moment an issue with building manylinux python wheels with openssl support prevents us from distributing precompiled packages for linux. 
+At the moment an issue with building manylinux python wheels with openssl support prevents us from distributing precompiled packages for linux.
 For now please use the same method as for other platforms to install qoqo_aqt on linux.
 
 For other platforms we recommend checking out the latest tagged version from github and using the [maturin](https://github.com/PyO3/maturin) tool to build a python package for qoqo locally and install it via pip.
