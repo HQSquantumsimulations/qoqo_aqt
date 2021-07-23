@@ -1,4 +1,4 @@
-qoqo documentation
+qoqo_aqt documentation
 ========================
 
 .. autosummary::

@@ -153,7 +153,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'qoqo_aqt.tex', 'qoqo Documentation',
+    (master_doc, 'qoqo_aqt.tex', 'qoqo_aqt Documentation',
      'HQS Quantum Simulations GmbH', 'manual'),
 ]
 
