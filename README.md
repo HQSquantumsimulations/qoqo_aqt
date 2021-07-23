@@ -1,3 +1,5 @@
+<img src="qoqo_Logo_vertical_color.png" alt="qoqo logo" width="300" />
+
 # qoqo-aqt
 
 AQT-backend for the qoqo/roqoqo quantum toolkit by [HQS Quantum Simulations](https://quantumsimulations.de).
