@@ -49,17 +49,33 @@ jobs:
           components: rustfmt
       - run: cargo fmt --all -- --check
 
-  deploy_pypi_manylinux:
-      runs-on: ubuntu-latest
-      #container: konstin2/maturin
-      steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          echo $GITHUB_WORKSPACE
-      - name: Build Manylinux Maturin
-        uses: addnab/docker-run-action@v3
+  publish_documentation:
+    needs: deploy_cratesio
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: "python3.9"
+    - uses: actions-rs/toolchain@v1
         with:
-          image: konstin2/maturin
-          options: -v /home/runner/work/qoqo_aqt/qoqo_aqt:/io
-          run: echo $OPENSSLDIR && PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig/" OPENSSL_LIB_DIR="/usr/local/ssl" OPENSSL_INCLUDE_DIR="/usr/local/ssl" maturin build -m qoqo_aqt/Cargo.toml --release --manylinux 2010
+          profile: minimal
+          toolchain: stable
+          default: true
+    - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip maturin
+          maturin build -i "python3.9" -m qoqo_aqt/Cargo.toml
+          pip install ./target/wheels/*
+          python -m pip install -r qoqo_aqt/docs/requirements.txt
+    - name: build
+        run: |
+          cd qoqo_aqt/docs
+          python -m sphinx -T -E -b html . _build/html
+          cd ../../
+    - name: publish
+        uses: peaceiris/actions-gh-pages@v3
+        #if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
