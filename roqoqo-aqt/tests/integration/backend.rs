@@ -33,6 +33,11 @@ fn init_backend() {
 }
 
 #[test]
+fn test_to_aqt_json(){
+    
+}
+
+#[test]
 fn init_backend_noisy() {
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
         let device = NoisySimulatorDevice::new(2);

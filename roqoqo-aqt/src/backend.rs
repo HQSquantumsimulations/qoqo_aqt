@@ -94,6 +94,25 @@ impl Backend {
             access_token: access_token_internal,
         })
     }
+
+    /// Creates an AQT json represenstaion of a [roqoqo::Circuit].
+    ///
+    /// # Arguments
+    ///
+    /// `circuit` - An iterator over Operations that represents a circuit that is translated
+    pub fn to_aqt_json<'a>(
+        &self,
+        circuit: impl Iterator<Item = &'a Operation>,
+    ) -> Result<String, RoqoqoBackendError> {
+        let mut instruction_vec: Vec<AqtInstruction> = Vec::new();
+        for op in circuit {
+            if let Some(x) = call_operation(op)? {
+                instruction_vec.push(x)
+            }
+        }
+
+        Ok(serde_json::to_string(&instruction_vec).unwrap())
+    }
 }
 
 impl EvaluatingBackend for Backend {
