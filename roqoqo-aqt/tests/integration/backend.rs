@@ -33,9 +33,7 @@ fn init_backend() {
 }
 
 #[test]
-fn test_to_aqt_json(){
-    
-}
+fn test_to_aqt_json() {}
 
 #[test]
 fn init_backend_noisy() {
