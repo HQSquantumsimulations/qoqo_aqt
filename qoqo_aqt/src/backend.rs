@@ -76,7 +76,7 @@ impl BackendWrapper {
     /// Raises:
     ///     TypeError: Circuit argument cannot be converted to qoqo Circuit
     ///     RuntimeError: Translating Circuit failed
-    pub fn to_aqt_json<'a>(&self, circuit: &PyAny) -> PyResult<String> {
+    pub fn to_aqt_json(&self, circuit: &PyAny) -> PyResult<String> {
         let circuit = convert_into_circuit(circuit).map_err(|err| {
             PyTypeError::new_err(format!(
                 "Circuit argument cannot be converted to qoqo Circuit {:?}",
