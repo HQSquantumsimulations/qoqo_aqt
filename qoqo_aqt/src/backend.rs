@@ -65,6 +65,29 @@ impl BackendWrapper {
         })
     }
 
+    /// Create an AQT json represenstaion of a Circuit.
+    ///
+    /// Args:
+    ///     circuit (Circuit): The circuit that is translated to a AQT json.
+    ///
+    /// Returns:
+    ///     str: The output registers written by the evaluated circuits.
+    ///
+    /// Raises:
+    ///     TypeError: Circuit argument cannot be converted to qoqo Circuit
+    ///     RuntimeError: Translating Circuit failed
+    pub fn to_aqt_json(&self, circuit: &PyAny) -> PyResult<String> {
+        let circuit = convert_into_circuit(circuit).map_err(|err| {
+            PyTypeError::new_err(format!(
+                "Circuit argument cannot be converted to qoqo Circuit {:?}",
+                err
+            ))
+        })?;
+        self.internal
+            .to_aqt_json(circuit.iter())
+            .map_err(|err| PyRuntimeError::new_err(format!("Translating Circuit failed {:?}", err)))
+    }
+
     /// Return a copy of the Backend (copy here produces a deepcopy).
     ///
     /// Returns:
