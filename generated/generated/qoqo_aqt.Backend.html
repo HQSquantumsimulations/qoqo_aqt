@@ -231,10 +231,13 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="../qoqo_aqt.html#qoqo_aqt.Backend.run_measurement_registers" title="qoqo_aqt.Backend.run_measurement_registers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_measurement_registers</span></code></a></p></td>
 <td><p>Run all circuits corresponding to one measurement with the AQT backend.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../qoqo_aqt.html#qoqo_aqt.Backend.to_bincode" title="qoqo_aqt.Backend.to_bincode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_bincode</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../qoqo_aqt.html#qoqo_aqt.Backend.to_aqt_json" title="qoqo_aqt.Backend.to_aqt_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_aqt_json</span></code></a></p></td>
+<td><p>Create an AQT json represenstaion of a Circuit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../qoqo_aqt.html#qoqo_aqt.Backend.to_bincode" title="qoqo_aqt.Backend.to_bincode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_bincode</span></code></a></p></td>
 <td><p>Return the bincode representation of the Backend using the [bincode] crate.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../qoqo_aqt.html#qoqo_aqt.Backend.to_json" title="qoqo_aqt.Backend.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../qoqo_aqt.html#qoqo_aqt.Backend.to_json" title="qoqo_aqt.Backend.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a></p></td>
 <td><p>Return the json representation of the Backend.</p></td>
 </tr>
 </tbody>
@@ -339,6 +342,29 @@ The results of each repetition are concatenated in OutputRegisters
 <dd class="field-even"><ul class="simple">
 <li><p><strong>TypeError</strong> -- Circuit argument cannot be converted to qoqo Circuit</p></li>
 <li><p><strong>RuntimeError</strong> -- Running Circuit failed</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qoqo_aqt.Backend.to_aqt_json">
+<span class="sig-name descname"><span class="pre">to_aqt_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qoqo_aqt.Backend.to_aqt_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an AQT json represenstaion of a Circuit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>circuit</strong> (<em>Circuit</em>) -- The circuit that is translated to a AQT json.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The output registers written by the evaluated circuits.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> -- Circuit argument cannot be converted to qoqo Circuit</p></li>
+<li><p><strong>RuntimeError</strong> -- Translating Circuit failed</p></li>
 </ul>
 </dd>
 </dl>
