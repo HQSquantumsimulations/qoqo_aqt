@@ -24,7 +24,7 @@ roqoqo = {version="0.5", features=["serialize"]}
 qoqo_calculator = { version="0.3"}
 reqwest = {version="0.11", features = ["json", "blocking"]}
 serde = { version = "1.0", features = ["derive"]}
-roqoqo-test = {version="0.5"}
+roqoqo-test = {version="0.6"}
 serde_json = "1.0"
 serde_urlencoded = "0.7"
 test-case = "1.1"
