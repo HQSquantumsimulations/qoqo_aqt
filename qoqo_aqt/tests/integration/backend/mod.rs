@@ -81,7 +81,7 @@ fn test_running_circuit() {
     circuit += operations::RotateY::new(0, 1.0.into());
     circuit += operations::RotateZ::new(0, 2.0.into());
     circuit += operations::MolmerSorensenXX::new(0, 1);
-    circuit += operations::PragmaRepeatedMeasurement::new("readout".to_string(), None, 100);
+    circuit += operations::PragmaRepeatedMeasurement::new("readout".to_string(), 100, None);
     let circuit_wrapper = CircuitWrapper { internal: circuit };
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
         Python::with_gil(|py| -> () {
@@ -112,7 +112,7 @@ fn test_running_measurement() {
     circuit += operations::RotateY::new(0, 1.0.into());
     circuit += operations::RotateZ::new(0, 2.0.into());
     circuit += operations::MolmerSorensenXX::new(0, 1);
-    circuit += operations::PragmaRepeatedMeasurement::new("readout".to_string(), None, 100);
+    circuit += operations::PragmaRepeatedMeasurement::new("readout".to_string(), 100, None);
     let cr_measurement = ClassicalRegister {
         constant_circuit: None,
         circuits: vec![circuit],
