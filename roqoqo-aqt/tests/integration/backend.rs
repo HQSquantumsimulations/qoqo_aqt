@@ -59,7 +59,7 @@ fn run_simple_circuit() {
         circuit += DefinitionBit::new("ro".to_string(), 2, true);
         circuit += RotateX::new(0, std::f64::consts::FRAC_PI_2.into());
         circuit += PauliX::new(1);
-        circuit += PragmaRepeatedMeasurement::new("ro".to_string(), None, 20);
+        circuit += PragmaRepeatedMeasurement::new("ro".to_string(), 20, None);
         let (bit_registers, _float_registers, _complex_registers) =
             backend.run_circuit(&circuit).unwrap();
         assert!(bit_registers.contains_key("ro"));
