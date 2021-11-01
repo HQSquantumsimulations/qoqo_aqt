@@ -31,7 +31,7 @@ qoqo_calculator = {version="0.3"}
 qoqo_calculator_pyo3 = {version="0.4", default-features=false}
 
 qoqo = {version="0.6", default-features=false}
-roqoqo = {version="0.6"}
+roqoqo = {version="0.8"}
 
 roqoqo-aqt = {version="0.3", path="../roqoqo-aqt"}
 bincode = "1.3"
