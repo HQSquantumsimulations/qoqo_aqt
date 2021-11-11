@@ -15,7 +15,7 @@ roqoqo-aqt provides a backend to the AQT quantum devices and simulators for the 
 To use roqoqo-aqt in a rust project simply add the following line to your Cargo.toml `[dependencies]` section.
 
 ```toml
-roqoqo-aqt = {version="0.1"}
+roqoqo-aqt = {version="0.4"}
 ```
 
 ## Use your AQT credentials
