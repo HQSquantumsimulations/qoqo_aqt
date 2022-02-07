@@ -22,10 +22,10 @@ jobs:
     - name: Install dependencies
       run: |
         pip install maturin pytest numpy qoqo
-        pip install ./qoqo_mock
+        pip install ./qoqo_aqt
     - name: test
       run: |
-        pytest ./qoqo_mock/tests
+        pytest ./qoqo_aqt
   clippy_check:
     runs-on: ubuntu-latest
     steps:
@@ -114,7 +114,7 @@ jobs:
           maturin-version: latest
           command: build
           manylinux: 2010
-          args: -i python${{ matrix.python.py }} --out wheels --no-sdist -m qoqo_calculator_pyo3/Cargo.toml --cargo-extra-args="--locked"
+          args: -i python${{ matrix.python.py }} --out wheels --no-sdist -m qoqo_aqt/Cargo.toml --cargo-extra-args="--locked"
       - name: test install
         run: |
           pip install wheels/* --force-reinstall
@@ -146,7 +146,7 @@ jobs:
         with:
           maturin-version: latest
           command: sdist
-          args: --out wheels -m qoqo_calculator_pyo3/Cargo.toml
+          args: --out wheels -m qoqo_aqt/Cargo.toml
       - name: test install
         run: |
           pip install wheels/* --force-reinstall
@@ -182,7 +182,7 @@ jobs:
         with:
           maturin-version: latest
           command: build
-          args: -i python --out wheels --no-sdist -m qoqo_calculator_pyo3/Cargo.toml --cargo-extra-args="--locked"
+          args: -i python --out wheels --no-sdist -m qoqo_aqt/Cargo.toml --cargo-extra-args="--locked"
 
   test_maturin_builds_macos:
     name: maturin_check-${{ matrix.combinations.runs_on }}
@@ -216,11 +216,11 @@ jobs:
       - name: macos wheels
         if: ${{ matrix.combinations.runs_on == 'macOS-latest' && matrix.python-version < '3.8'}}
         run: |
-          RUSTFLAGS="-C link-arg=-undefined -C link-arg=dynamic_lookup" maturin build -i ${{ matrix.python.interpreter }} --out wheels --no-sdist -m qoqo_calculator_pyo3/Cargo.toml --cargo-extra-args="--locked"
+          RUSTFLAGS="-C link-arg=-undefined -C link-arg=dynamic_lookup" maturin build -i ${{ matrix.python.interpreter }} --out wheels --no-sdist -m qoqo_aqt/Cargo.toml --cargo-extra-args="--locked"
       - name: universal wheels
         if: ${{ matrix.combinations.runs_on == 'macOS-latest' && matrix.python-version >= '3.8' }}
         run: |
-          RUSTFLAGS="-C link-arg=-undefined -C link-arg=dynamic_lookup" maturin build -i ${{ matrix.python.interpreter }} --out wheels --universal2 --no-sdist -m qoqo_calculator_pyo3/Cargo.toml --cargo-extra-args="--locked"
+          RUSTFLAGS="-C link-arg=-undefined -C link-arg=dynamic_lookup" maturin build -i ${{ matrix.python.interpreter }} --out wheels --universal2 --no-sdist -m qoqo_aqt/Cargo.toml --cargo-extra-args="--locked"
       - name: test install
         run: |
           pip install wheels/* --force-reinstall
@@ -252,7 +252,7 @@ jobs:
           python -m pip install --upgrade pip maturin pytest numpy twine        
       - name: universal wheels
         run: |
-          maturin sdist --out wheels -m qoqo_calculator_pyo3/Cargo.toml
+          maturin sdist --out wheels -m qoqo_aqt/Cargo.toml
       - name: test install
         run: |
           RUSTFLAGS="-C link-arg=-undefined -C link-arg=dynamic_lookup" pip install wheels/* --force-reinstall
@@ -269,4 +269,4 @@ jobs:
           target: x86_64-unknown-linux-gnu
           default: true
       - run: |
-          cargo test --doc --package=qoqo_calculator
+          cargo test --doc --package=roqoqo-aqt
