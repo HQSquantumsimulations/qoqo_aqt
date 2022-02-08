@@ -111,7 +111,7 @@ jobs:
       - name: linux wheels
         uses: messense/maturin-action@v1
         with:
-          maturin-version: latest
+          # maturin-version: latest
           command: build
           manylinux: 2010
           args: -i python${{ matrix.python.py }} --out wheels --no-sdist -m qoqo_aqt/Cargo.toml --cargo-extra-args="--locked"
@@ -144,7 +144,7 @@ jobs:
       - name: linux wheels
         uses: messense/maturin-action@v1
         with:
-          maturin-version: latest
+          # maturin-version: latest
           command: sdist
           args: --out wheels -m qoqo_aqt/Cargo.toml
       - name: test install
@@ -180,7 +180,7 @@ jobs:
       - name: windows wheels
         uses: messense/maturin-action@v1
         with:
-          maturin-version: latest
+          # maturin-version: latest
           command: build
           args: -i python --out wheels --no-sdist -m qoqo_aqt/Cargo.toml  --cargo-extra-args="--locked"
 
