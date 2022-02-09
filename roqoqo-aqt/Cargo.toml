@@ -10,7 +10,7 @@ repository = "https://github.com/HQSquantumsimulations/qoqo_aqt"
 homepage = "https://github.com/HQSquantumsimulations/qoqo_aqt"
 documentation = "https://docs.rs/qoqo_aqt/"
 description = "AQT interface for roqoqo rust quantum computing toolkit"
-include = ["src*", "LICENCE", "README.md"]
+include = ["src*", "LICENSE", "README.md"]
 
 [lib]
 name = "roqoqo_aqt"

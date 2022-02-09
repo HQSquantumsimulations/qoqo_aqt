@@ -10,7 +10,7 @@ homepage = "https://github.com/HQSquantumsimulations/qoqo_aqt"
 documentation = "https://docs.rs/qoqo_aqt/"
 repository = "https://github.com/HQSquantumsimulations/qoqo_aqt"
 description = "AQT backend for qoqo quantum computing toolkit"
-include = ["src*", "qoqo_aqt", "LICENCE", "pyproject.toml", "README.md"]
+include = ["src*", "qoqo_aqt", "LICENSE", "pyproject.toml", "README.md"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
