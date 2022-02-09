@@ -25,7 +25,8 @@ jobs:
         pip install ./qoqo_aqt
     - name: test
       run: |
-        pytest ./qoqo_aqt
+        pytest ./qoqo_aqt/python_tests/
+
   clippy_check:
     runs-on: ubuntu-latest
     steps:
