@@ -17,7 +17,7 @@ import numpy.testing as npt
 from qoqo import operations as ops
 from qoqo import Circuit
 from qoqo_aqt.devices import SimulatorDevice
-from qoqo_aqt import Backend, SimulatorDevice
+from qoqo_aqt import Backend
 from typing import List
 
 
