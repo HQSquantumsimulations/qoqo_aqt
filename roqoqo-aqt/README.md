@@ -45,6 +45,8 @@ RUSTFLAGS="-C link-arg=-undefined -C link-arg=dynamic_lookup" maturin build -m q
 pip install target/wheels/$NAME_OF_WHEEL
 ```
 
+A source distribution now exists but requires a Rust install with a rust version > 1.47 and a maturin version { >= 0.12, <0.13 } in order to be built.
+
 ## roqoqo-aqt
 
 [![Crates.io](https://img.shields.io/crates/v/roqoqo-aqt)](https://crates.io/crates/roqoqo-aqt)

@@ -3,6 +3,9 @@
 This changelog track changes to the qoqo aqt project starting at version 0.3.0
 
 ## Not released
+
+* qoqo_aqt can now be built using a source distribution
+
 ## 0.3.1
 
 * Updated all dependencies to the ones using pyo3 0.15.0
