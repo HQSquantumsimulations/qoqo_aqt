@@ -26,12 +26,12 @@ features = ["num-complex"]
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
-qoqo_calculator = {version="0.5"}
+qoqo_calculator = {version="0.6"}
 
-qoqo_calculator_pyo3 = {version="0.5", default-features=false}
+qoqo_calculator_pyo3 = {version="0.6", default-features=false}
 
-qoqo = {version="0.8.2", default-features=false}
-roqoqo = {version="0.8.2"}
+qoqo = {version="0.10", default-features=false}
+roqoqo = {version="0.10"}
 
 roqoqo-aqt = {version="0.3", path="../roqoqo-aqt"}
 bincode = "1.3"
@@ -45,7 +45,7 @@ extension-module = ["pyo3/extension-module"]
 default = ["extension-module"]
 
 [package.metadata.maturin]
-requires-dist = ["numpy", "qoqo>=0.8.2", "qoqo_calculator_pyo3"]
+requires-dist = ["numpy", "qoqo>=0.10", "qoqo_calculator_pyo3"]
 maintainer = "HQS Quantum Simulations GmbH"
 maintainer-email = "info@quantumsimulations.de"
 requires-python = ">=3.6"
