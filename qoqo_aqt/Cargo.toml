@@ -48,4 +48,4 @@ default = ["extension-module"]
 requires-dist = ["numpy", "qoqo>=0.10", "qoqo_calculator_pyo3"]
 maintainer = "HQS Quantum Simulations GmbH"
 maintainer-email = "info@quantumsimulations.de"
-requires-python = ">=3.6"
+requires-python = ">=3.7"
