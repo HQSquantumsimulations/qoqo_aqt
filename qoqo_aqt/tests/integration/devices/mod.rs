@@ -23,7 +23,7 @@ use test_case::test_case;
 #[test_case(3; "3")]
 fn test_creating_device(number_qubits: usize) {
     pyo3::prepare_freethreaded_python();
-    Python::with_gil(|py| -> () {
+    Python::with_gil(|py| {
         let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
         let device = device_type
             .call1((number_qubits,))
@@ -31,7 +31,7 @@ fn test_creating_device(number_qubits: usize) {
             .cast_as::<PyCell<devices::SimulatorDeviceWrapper>>()
             .unwrap();
 
-        let number_qubits = device
+        let get_number_qubits = device
             .call_method0("number_qubits")
             .unwrap()
             .extract::<usize>()
@@ -41,7 +41,7 @@ fn test_creating_device(number_qubits: usize) {
             .unwrap()
             .extract::<String>()
             .unwrap();
-        assert_eq!(number_qubits, number_qubits);
+        assert_eq!(number_qubits, get_number_qubits);
         assert_eq!(remote_host.as_str(), "https://gateway.aqt.eu/marmot/sim/");
     })
 }
@@ -50,7 +50,7 @@ fn test_creating_device(number_qubits: usize) {
 #[test_case(3; "3")]
 fn test_creating_noisy_device(number_qubits: usize) {
     pyo3::prepare_freethreaded_python();
-    Python::with_gil(|py| -> () {
+    Python::with_gil(|py| {
         let device_type = py.get_type::<devices::NoisySimulatorDeviceWrapper>();
         let device = device_type
             .call1((number_qubits,))
@@ -58,7 +58,7 @@ fn test_creating_noisy_device(number_qubits: usize) {
             .cast_as::<PyCell<devices::NoisySimulatorDeviceWrapper>>()
             .unwrap();
 
-        let number_qubits = device
+        let get_number_qubits = device
             .call_method0("number_qubits")
             .unwrap()
             .extract::<usize>()
@@ -68,7 +68,7 @@ fn test_creating_noisy_device(number_qubits: usize) {
             .unwrap()
             .extract::<String>()
             .unwrap();
-        assert_eq!(number_qubits, number_qubits);
+        assert_eq!(number_qubits, get_number_qubits);
         assert_eq!(
             remote_host.as_str(),
             "https://gateway.aqt.eu/marmot/sim/noise-model-1"
