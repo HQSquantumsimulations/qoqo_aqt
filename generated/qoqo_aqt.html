@@ -212,6 +212,29 @@ The results of each repetition are concatenated in OutputRegisters
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qoqo_aqt.Backend.run_measurement">
+<span class="sig-name descname"><span class="pre">run_measurement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qoqo_aqt.Backend.run_measurement" title="Permalink to this definition"></a></dt>
+<dd><p>Evaluates expectation values of a measurement with the backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>measurement</strong> (<em>Measurement</em>) -- The measurement that is run on the backend.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The  dictionary of expectation values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Optional[Dict[str, float]]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> -- Measurement evaluate function could not be used</p></li>
+<li><p><strong>RuntimeError</strong> -- Internal error measurement.evaluation returned unknown type</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qoqo_aqt.Backend.run_measurement_registers">
 <span class="sig-name descname"><span class="pre">run_measurement_registers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qoqo_aqt.Backend.run_measurement_registers" title="Permalink to this definition"></a></dt>
 <dd><p>Run all circuits corresponding to one measurement with the AQT backend.</p>

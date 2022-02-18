@@ -17,6 +17,7 @@ qoqo\_aqt.Backend
       ~Backend.from_bincode
       ~Backend.from_json
       ~Backend.run_circuit
+      ~Backend.run_measurement
       ~Backend.run_measurement_registers
       ~Backend.to_aqt_json
       ~Backend.to_bincode
