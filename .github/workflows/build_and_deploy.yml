@@ -11,7 +11,7 @@ jobs:
   deploy_cratesio:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: actions-rs/toolchain@v1
       with:
         profile: minimal
@@ -37,7 +37,7 @@ jobs:
             {py: '3.10', interpreter: "python3.10"}
         ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -78,7 +78,7 @@ jobs:
             {py: '3.10', interpreter: "python3.10"}
         ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -138,7 +138,7 @@ jobs:
   #           {py: 3.9, interpreter: "python3.9"}
   #       ]
   #     steps:
-  #     - uses: actions/checkout@v2
+  #     - uses: actions/checkout@v3
   #     - uses: actions/setup-python@v2
   #       with:
   #         python-version: ${{ matrix.python.py }}
