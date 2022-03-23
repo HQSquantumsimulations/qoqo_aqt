@@ -52,7 +52,7 @@ jobs:
         with:
           maturin-version: latest
           command: sdist
-          args:  --out wheels  -m qoqo/Cargo.toml 
+          args:  --out wheels  -m qoqo_aqt/Cargo.toml 
       - name: test install
         run: |
           pip install wheels/* --force-reinstall

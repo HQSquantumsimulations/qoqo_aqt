@@ -810,7 +810,7 @@ dependencies = [
 
 [[package]]
 name = "qoqo-aqt"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "bincode",
  "pyo3",
@@ -1001,7 +1001,7 @@ dependencies = [
 
 [[package]]
 name = "roqoqo-aqt"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "qoqo_calculator",
  "reqwest",
