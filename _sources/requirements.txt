@@ -6,4 +6,4 @@ pygments
 recommonmark
 myst_parser
 sphinx_rtd_theme
-qoqo_aqt>=0.4.0
+qoqo_aqt>=0.4.1
