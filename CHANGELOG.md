@@ -4,6 +4,10 @@ This changelog track changes to the qoqo aqt project starting at version 0.3.0
 
 ## Not released
 
+## 0.5.0
+
+* Updated qoqo and roqoqo dependencies
+
 ## 0.4.1
 
 * qoqo_aqt can now be built using a source distribution
