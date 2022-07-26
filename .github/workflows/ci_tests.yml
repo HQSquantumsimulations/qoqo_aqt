@@ -194,7 +194,7 @@ jobs:
       - name: windows wheels
         uses: messense/maturin-action@v1
         with:
-          # maturin-version: latest
+          maturin-version: latest
           command: build
           args: -i python --out wheels -m qoqo_aqt/Cargo.toml  --locked
 
