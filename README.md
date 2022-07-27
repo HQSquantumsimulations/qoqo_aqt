@@ -62,6 +62,8 @@ A short tutorial can be found in Tutorial_roqoqo.md in the git repository.
 
 This software is still in the beta stage. Functions and documentation are not yet complete and breaking changes can occur.
 
+This project is partly supported by [PlanQK](https://planqk.de).
+
 ## Contributing
 
 We welcome contributions to the project. If you want to contribute code, please have a look at CONTRIBUTE.md for our code contribution guidelines.

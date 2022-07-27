@@ -82,7 +82,8 @@ impl SimulatorDeviceWrapper {
     /// Raises:
     ///     TypeError: Input cannot be converted to byte array.
     ///     ValueError: Input cannot be deserialized to SimulatorDevice.
-    pub fn from_bincode(&self, input: &PyAny) -> PyResult<SimulatorDeviceWrapper> {
+    #[staticmethod]
+    pub fn from_bincode(input: &PyAny) -> PyResult<SimulatorDeviceWrapper> {
         let bytes = input
             .extract::<Vec<u8>>()
             .map_err(|_| PyTypeError::new_err("Input cannot be converted to byte array"))?;
@@ -117,7 +118,8 @@ impl SimulatorDeviceWrapper {
     ///
     /// Raises:
     ///     ValueError: Input cannot be deserialized to SimulatorDevice.
-    fn from_json(&self, input: &str) -> PyResult<SimulatorDeviceWrapper> {
+    #[staticmethod]
+    fn from_json(input: &str) -> PyResult<SimulatorDeviceWrapper> {
         Ok(SimulatorDeviceWrapper {
             internal: serde_json::from_str(input).map_err(|_| {
                 PyValueError::new_err("Input cannot be deserialized to SimulatorDevice")
@@ -244,7 +246,8 @@ impl NoisySimulatorDeviceWrapper {
     /// Raises:
     ///     TypeError: Input cannot be converted to byte array.
     ///     ValueError: Input cannot be deserialized to SimulatorDevice.
-    pub fn from_bincode(&self, input: &PyAny) -> PyResult<NoisySimulatorDeviceWrapper> {
+    #[staticmethod]
+    pub fn from_bincode(input: &PyAny) -> PyResult<NoisySimulatorDeviceWrapper> {
         let bytes = input
             .extract::<Vec<u8>>()
             .map_err(|_| PyTypeError::new_err("Input cannot be converted to byte array"))?;
@@ -279,7 +282,8 @@ impl NoisySimulatorDeviceWrapper {
     ///
     /// Raises:
     ///     ValueError: Input cannot be deserialized to SimulatorDevice.
-    fn from_json(&self, input: &str) -> PyResult<NoisySimulatorDeviceWrapper> {
+    #[staticmethod]
+    fn from_json(input: &str) -> PyResult<NoisySimulatorDeviceWrapper> {
         Ok(NoisySimulatorDeviceWrapper {
             internal: serde_json::from_str(input).map_err(|_| {
                 PyValueError::new_err("Input cannot be deserialized to SimulatorDevice")

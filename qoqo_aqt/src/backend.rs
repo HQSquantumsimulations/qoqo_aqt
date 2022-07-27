@@ -131,7 +131,8 @@ impl BackendWrapper {
     /// Raises:
     ///     TypeError: Input cannot be converted to byte array.
     ///     ValueError: Input cannot be deserialized to Backend.
-    pub fn from_bincode(&self, input: &PyAny) -> PyResult<BackendWrapper> {
+    #[staticmethod]
+    pub fn from_bincode(input: &PyAny) -> PyResult<BackendWrapper> {
         let bytes = input
             .extract::<Vec<u8>>()
             .map_err(|_| PyTypeError::new_err("Input cannot be converted to byte array"))?;
@@ -165,7 +166,8 @@ impl BackendWrapper {
     ///
     /// Raises:
     ///     ValueError: Input cannot be deserialized to Backend.
-    fn from_json(&self, input: &str) -> PyResult<BackendWrapper> {
+    #[staticmethod]
+    fn from_json(input: &str) -> PyResult<BackendWrapper> {
         Ok(BackendWrapper {
             internal: serde_json::from_str(input)
                 .map_err(|_| PyValueError::new_err("Input cannot be deserialized to Backend"))?,
