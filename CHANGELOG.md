@@ -4,7 +4,10 @@ This changelog track changes to the qoqo aqt project starting at version 0.3.0
 
 ## Not released
 
-* Updated to qoqo 1.0.0-alpha.2 and qoqo_calculator 0.8
+## 0.5.0
+
+* Updated qoqo and roqoqo dependencies
+* Fixed from_json and from_bincode to be staticmethods
 
 ## 0.4.1
 
