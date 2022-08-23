@@ -964,7 +964,7 @@ limitations under the License.
 
 
 ====================================================
-bumpalo 3.10.0
+bumpalo 3.11.0
 https://github.com/fitzgen/bumpalo
 by Nick Fitzgerald <fitzgen@gmail.com>
 A fast bump allocation arena for Rust.
@@ -1205,7 +1205,7 @@ limitations under the License.
 
 
 ====================================================
-bytemuck 1.11.0
+bytemuck 1.12.1
 https://github.com/Lokathor/bytemuck
 by Lokathor <zefria@gmail.com>
 A crate for mucking around with piles of bytes.
@@ -3776,7 +3776,7 @@ limitations under the License.
 
 
 ====================================================
-futures-channel 0.3.21
+futures-channel 0.3.23
 https://rust-lang.github.io/futures-rs
 by 
 Channels for asynchronous communication using futures-rs.
@@ -4020,7 +4020,7 @@ limitations under the License.
 
 
 ====================================================
-futures-core 0.3.21
+futures-core 0.3.23
 https://rust-lang.github.io/futures-rs
 by 
 The core traits and types in for the `futures` library.
@@ -4264,7 +4264,7 @@ limitations under the License.
 
 
 ====================================================
-futures-io 0.3.21
+futures-io 0.3.23
 https://rust-lang.github.io/futures-rs
 by 
 The `AsyncRead`, `AsyncWrite`, `AsyncSeek`, and `AsyncBufRead` traits for the futures-rs library.
@@ -4508,7 +4508,7 @@ limitations under the License.
 
 
 ====================================================
-futures-sink 0.3.21
+futures-sink 0.3.23
 https://rust-lang.github.io/futures-rs
 by 
 The asynchronous `Sink` trait for the futures-rs library.
@@ -4752,7 +4752,7 @@ limitations under the License.
 
 
 ====================================================
-futures-task 0.3.21
+futures-task 0.3.23
 https://rust-lang.github.io/futures-rs
 by 
 Tools for working with tasks.
@@ -4996,7 +4996,7 @@ limitations under the License.
 
 
 ====================================================
-futures-util 0.3.21
+futures-util 0.3.23
 https://rust-lang.github.io/futures-rs
 by 
 Common utilities and extension traits for the futures-rs library.
@@ -5482,7 +5482,7 @@ limitations under the License.
 
 
 ====================================================
-h2 0.3.13
+h2 0.3.14
 https://github.com/hyperium/h2
 by Carl Lerche <me@carllerche.com>, Sean McArthur <sean@seanmonstar.com>
 An HTTP/2 client and server
@@ -7498,7 +7498,7 @@ limitations under the License.
 
 
 ====================================================
-indoc 1.0.6
+indoc 1.0.7
 https://github.com/dtolnay/indoc
 by David Tolnay <dtolnay@gmail.com>
 Indented document literals
@@ -7998,7 +7998,7 @@ LICENSE-APACHE:
 
 
 ====================================================
-itoa 1.0.2
+itoa 1.0.3
 https://github.com/dtolnay/itoa
 by David Tolnay <dtolnay@gmail.com>
 Fast integer primitive to string conversion
@@ -8721,7 +8721,7 @@ limitations under the License.
 
 
 ====================================================
-libc 0.2.126
+libc 0.2.132
 https://github.com/rust-lang/libc
 by The Rust Project Developers
 Raw FFI bindings to platform libraries like libc.
@@ -8938,7 +8938,7 @@ END OF TERMS AND CONDITIONS
 
 
 ====================================================
-libm 0.2.3
+libm 0.2.5
 https://github.com/rust-lang/libm
 by Jorge Aparicio <jorge@japaric.io>
 libm in pure Rust
@@ -12210,7 +12210,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 ====================================================
-once_cell 1.13.0
+once_cell 1.13.1
 https://github.com/matklad/once_cell
 by Aleksey Kladov <aleksey.kladov@gmail.com>
 Single assignment cells and lazy values.
@@ -13470,7 +13470,7 @@ limitations under the License.
 
 
 ====================================================
-paste 1.0.7
+paste 1.0.8
 https://github.com/dtolnay/paste
 by David Tolnay <dtolnay@gmail.com>
 Macros for all your token pasting needs
@@ -15368,12 +15368,10 @@ limitations under the License.
 
 
 ====================================================
-proc-macro2 1.0.42
+proc-macro2 1.0.43
 https://github.com/dtolnay/proc-macro2
 by David Tolnay <dtolnay@gmail.com>, Alex Crichton <alex@alexcrichton.com>
-A substitute implementation of the compiler's `proc_macro` API to decouple
-token-based libraries from the procedural macro use case.
-
+A substitute implementation of the compiler's `proc_macro` API to decouple token-based libraries from the procedural macro use case.
 License: MIT OR Apache-2.0
 ----------------------------------------------------
 LICENSE-MIT:
@@ -17039,7 +17037,7 @@ LICENSE:
 
 
 ====================================================
-qoqo 1.0.0-alpha.5
+qoqo 1.0.0
 https://github.com/HQSquantumsimulations/qoqo
 by HQS Quantum Simulations <info@quantumsimulations.de>
 Quantum computing circuit toolkit. Python interface of roqoqo
@@ -17251,7 +17249,7 @@ LICENSE:
 
 
 ====================================================
-qoqo-aqt 0.5.0
+qoqo-aqt 0.5.1
 https://github.com/HQSquantumsimulations/qoqo_aqt
 by HQS Quantum Simulations <info@quantumsimulations.de>
 AQT backend for qoqo quantum computing toolkit
@@ -17463,7 +17461,7 @@ LICENSE:
 
 
 ====================================================
-qoqo-macros 1.0.0-alpha.5
+qoqo-macros 1.0.0
 by HQS Quantum Simulations <info@quantumsimulations.de>
 Macros for the qoqo crate
 License: Apache-2.0
@@ -17674,7 +17672,7 @@ LICENSE:
 
 
 ====================================================
-qoqo_calculator 0.8.3
+qoqo_calculator 1.0.0
 https://github.com/HQSquantumsimulations/qoqo_calculator
 by HQS Quantum Simulations <info@quantumsimulations.de>
 qoqo-calculator is the calculator backend of the qoqo quantum computing toolkit by HQS Quantum Simulations
@@ -17886,7 +17884,7 @@ LICENSE:
 
 
 ====================================================
-qoqo_calculator_pyo3 0.8.3
+qoqo_calculator_pyo3 1.0.0
 https://github.com/HQSquantumsimulations/qoqo_calculator_pyo3
 by HQS Quantum Simulations <info@quantumsimulations.de>
 Python interface to qoqo calculator, the calculator backend of the qoqo quantum computing toolkit by HQS Quantum Simulations
@@ -18098,7 +18096,7 @@ LICENSE:
 
 
 ====================================================
-quote 1.0.20
+quote 1.0.21
 https://github.com/dtolnay/quote
 by David Tolnay <dtolnay@gmail.com>
 Quasi-quoting macro quote!(...)
@@ -19792,7 +19790,7 @@ limitations under the License.
 
 
 ====================================================
-roqoqo 1.0.0-alpha.5
+roqoqo 1.0.0
 https://github.com/HQSquantumsimulations/qoqo
 by HQS Quantum Simulations <info@quantumsimulations.de>
 Rust Quantum Computing Toolkit by HQS
@@ -20004,7 +20002,7 @@ LICENSE:
 
 
 ====================================================
-roqoqo-aqt 0.5.0
+roqoqo-aqt 0.5.1
 https://github.com/HQSquantumsimulations/qoqo_aqt
 by HQS Quantum Simulations <info@quantumsimulations.de>
 AQT interface for roqoqo rust quantum computing toolkit
@@ -20216,7 +20214,7 @@ LICENSE:
 
 
 ====================================================
-roqoqo-derive 1.0.0-alpha.5
+roqoqo-derive 1.0.0
 by HQS Quantum Simulations <info@quantumsimulations.de>
 Macros for the roqoqo crate
 License: Apache-2.0
@@ -20427,7 +20425,7 @@ LICENSE:
 
 
 ====================================================
-roqoqo-test 1.0.0-alpha.5
+roqoqo-test 1.0.0
 https://github.com/HQSquantumsimulations/qoqo
 by HQS Quantum Simulations <info@quantumsimulations.de>
 Testing helper functions for roqoqo toolkit
@@ -20639,7 +20637,7 @@ LICENSE:
 
 
 ====================================================
-ryu 1.0.10
+ryu 1.0.11
 https://github.com/dtolnay/ryu
 by David Tolnay <dtolnay@gmail.com>
 Fast floating point to string conversion
@@ -21164,7 +21162,7 @@ limitations under the License.
 
 
 ====================================================
-security-framework 2.6.1
+security-framework 2.7.0
 https://lib.rs/crates/security_framework
 by Steven Fackler <sfackler@gmail.com>, Kornel <kornel@geekhood.net>
 Security.framework bindings for macOS and iOS
@@ -21636,7 +21634,7 @@ limitations under the License.
 
 
 ====================================================
-serde 1.0.140
+serde 1.0.144
 https://serde.rs
 by Erick Tryzelaar <erick.tryzelaar@gmail.com>, David Tolnay <dtolnay@gmail.com>
 A generic serialization/deserialization framework
@@ -21875,7 +21873,7 @@ limitations under the License.
 
 
 ====================================================
-serde_derive 1.0.140
+serde_derive 1.0.144
 https://serde.rs
 by Erick Tryzelaar <erick.tryzelaar@gmail.com>, David Tolnay <dtolnay@gmail.com>
 Macros 1.1 implementation of #[derive(Serialize, Deserialize)]
@@ -22114,7 +22112,7 @@ limitations under the License.
 
 
 ====================================================
-serde_json 1.0.82
+serde_json 1.0.85
 https://github.com/serde-rs/json
 by Erick Tryzelaar <erick.tryzelaar@gmail.com>, David Tolnay <dtolnay@gmail.com>
 A JSON serialization file format
@@ -23301,7 +23299,7 @@ limitations under the License.
 
 
 ====================================================
-syn 1.0.98
+syn 1.0.99
 https://github.com/dtolnay/syn
 by David Tolnay <dtolnay@gmail.com>
 Parser for Rust source code
@@ -24051,7 +24049,7 @@ Provides #[test_case(...)] procedural macro attribute for generating parametrize
 License: MIT
 
 ====================================================
-thiserror 1.0.31
+thiserror 1.0.32
 https://github.com/dtolnay/thiserror
 by David Tolnay <dtolnay@gmail.com>
 derive(Error)
@@ -24290,7 +24288,7 @@ limitations under the License.
 
 
 ====================================================
-thiserror-impl 1.0.31
+thiserror-impl 1.0.32
 https://github.com/dtolnay/thiserror
 by David Tolnay <dtolnay@gmail.com>
 Implementation detail of the `thiserror` crate
@@ -25538,7 +25536,7 @@ limitations under the License.
 
 
 ====================================================
-unicode-ident 1.0.2
+unicode-ident 1.0.3
 https://github.com/dtolnay/unicode-ident
 by David Tolnay <dtolnay@gmail.com>
 Determine whether characters have the XID_Start or XID_Continue properties according to Unicode Standard Annex #31
@@ -26072,7 +26070,7 @@ limitations under the License.
 
 
 ====================================================
-unindent 0.1.9
+unindent 0.1.10
 https://github.com/dtolnay/indoc
 by David Tolnay <dtolnay@gmail.com>
 Remove a column of leading whitespace from a string
