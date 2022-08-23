@@ -28,7 +28,7 @@ use std::collections::HashMap;
 ///
 /// provides functions to run circuits and measurements on AQT devices.
 #[pyclass(name = "Backend", module = "qoqo_aqt")]
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct BackendWrapper {
     /// Internal storage of [roqoqo_aqt::Backend]
     pub internal: Backend,

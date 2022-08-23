@@ -18,7 +18,7 @@
 /// Collection of AQT quantum devices
 ///
 /// At the moment only supports a simulator endpoint
-#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize)]
 pub enum AqtDevice {
     /// AQT online simulator
     SimulatorDevice(SimulatorDevice),
@@ -59,7 +59,7 @@ impl From<SimulatorDevice> for AqtDevice {
 /// AQT quantum simulator device
 ///
 /// Provides endpoint that receives instructions that are simulated and returns measurement results.
-#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize)]
 pub struct SimulatorDevice {
     /// Number of qubits supported by the device
     pub number_qubits: usize,
@@ -89,7 +89,7 @@ impl SimulatorDevice {
 /// AQT noisy quantum simulator device
 ///
 /// Provides endpoint that receives instructions that are simulated and returns measurement results.
-#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize)]
 pub struct NoisySimulatorDevice {
     /// Number of qubits supported by the device
     pub number_qubits: usize,

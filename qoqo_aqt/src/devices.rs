@@ -20,7 +20,7 @@ use roqoqo_aqt::devices::{AqtDevice, NoisySimulatorDevice, SimulatorDevice};
 ///
 /// Provides endpoint that receives instructions that are simulated and returns measurement results.
 #[pyclass(name = "SimulatorDevice", module = "qoqo_aqt")]
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct SimulatorDeviceWrapper {
     /// Internal storage of [roqoqo_aqt::SimulatorDevice]
     pub internal: SimulatorDevice,
@@ -184,7 +184,7 @@ pub fn convert_into_device(input: &PyAny) -> Result<AqtDevice, QoqoBackendError>
 ///
 /// Provides endpoint that receives instructions that are simulated and returns measurement results.
 #[pyclass(name = "NoisySimulatorDevice", module = "qoqo_aqt")]
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct NoisySimulatorDeviceWrapper {
     /// Internal storage of [roqoqo_aqt::SimulatorDevice]
     pub internal: NoisySimulatorDevice,

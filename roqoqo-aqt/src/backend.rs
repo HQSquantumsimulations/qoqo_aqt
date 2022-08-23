@@ -24,7 +24,7 @@ use std::{thread, time};
 /// AQT backend
 ///
 /// provides functions to run circuits and measurements on AQT devices.
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct Backend {
     /// Device the backend calls to run circuits remotely
     pub device: AqtDevice,
