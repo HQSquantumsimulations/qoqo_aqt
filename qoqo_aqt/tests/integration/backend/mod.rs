@@ -26,7 +26,7 @@ use std::env;
 #[test]
 fn test_creating_backend() {
     pyo3::prepare_freethreaded_python();
-    Python::with_gil(|py| -> () {
+    Python::with_gil(|py| {
         let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
         let device = device_type
             .call1((3,))
@@ -41,7 +41,7 @@ fn test_creating_backend() {
             .unwrap();
     });
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
-        Python::with_gil(|py| -> () {
+        Python::with_gil(|py| {
             let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
             let device = device_type
                 .call1((3,))
@@ -56,7 +56,7 @@ fn test_creating_backend() {
                 .unwrap();
         })
     } else {
-        Python::with_gil(|py| -> () {
+        Python::with_gil(|py| {
             let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
             let device = device_type
                 .call1((3,))
@@ -84,7 +84,7 @@ fn test_running_circuit() {
     circuit += operations::PragmaRepeatedMeasurement::new("readout".to_string(), 100, None);
     let circuit_wrapper = CircuitWrapper { internal: circuit };
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
-        Python::with_gil(|py| -> () {
+        Python::with_gil(|py| {
             let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
             let device = device_type
                 .call1((3,))
@@ -121,7 +121,7 @@ fn test_running_measurement() {
         internal: cr_measurement,
     };
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
-        Python::with_gil(|py| -> () {
+        Python::with_gil(|py| {
             let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
             let device = device_type
                 .call1((3,))
