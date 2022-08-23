@@ -4,6 +4,10 @@ This changelog track changes to the qoqo aqt project starting at version 0.3.0
 
 ## Not released
 
+## 0.5.1
+
+* Updated to qoqo 1.0.0 and qoqo_calculator 1.0.0
+
 ## 0.5.0
 
 * Updated qoqo and roqoqo dependencies
