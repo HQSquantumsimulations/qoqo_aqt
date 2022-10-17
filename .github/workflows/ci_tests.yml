@@ -19,7 +19,7 @@ jobs:
         profile: minimal
         toolchain: stable
         default: true
-    - uses: Swatinem/rust-cache@v2.0.0
+    - uses: Swatinem/rust-cache@v2.0.1
     - name: Install dependencies
       run: |
         pip install maturin pytest numpy qoqo
@@ -37,7 +37,7 @@ jobs:
           profile: minimal
           toolchain: stable
           components: clippy
-      - uses: Swatinem/rust-cache@v2.0.0
+      - uses: Swatinem/rust-cache@v2.0.1
       - run: cargo clippy -- -D warnings
 
   cargo-deny:
@@ -76,7 +76,7 @@ jobs:
           target: ${{ matrix.combinations.rust }}
           default: true
           components: rustfmt
-      - uses: Swatinem/rust-cache@v2.0.0
+      - uses: Swatinem/rust-cache@v2.0.1
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python.py }}
@@ -94,7 +94,7 @@ jobs:
           profile: minimal
           toolchain: stable
           components: rustfmt
-      - uses: Swatinem/rust-cache@v2.0.0
+      - uses: Swatinem/rust-cache@v2.0.1
       - run: cargo fmt --all -- --check
 
   # test_maturin_builds_linux:
@@ -187,7 +187,7 @@ jobs:
           toolchain: stable
           target: ${{ matrix.combinations.rust }}
           default: true
-      - uses: Swatinem/rust-cache@v2.0.0
+      - uses: Swatinem/rust-cache@v2.0.1
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python.py }}
@@ -220,7 +220,7 @@ jobs:
           toolchain: stable
           target: "aarch64-apple-darwin"
           default: true
-      - uses: Swatinem/rust-cache@v2.0.0
+      - uses: Swatinem/rust-cache@v2.0.1
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python.py }}
@@ -258,7 +258,7 @@ jobs:
           toolchain: stable
           target: "aarch64-apple-darwin"
           default: true
-      - uses: Swatinem/rust-cache@v2.0.0
+      - uses: Swatinem/rust-cache@v2.0.1
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python.py }}
@@ -283,6 +283,6 @@ jobs:
           toolchain: stable
           target: x86_64-unknown-linux-gnu
           default: true
-      - uses: Swatinem/rust-cache@v2.0.0
+      - uses: Swatinem/rust-cache@v2.0.1
       - run: |
           cargo test --doc --package=roqoqo-aqt
