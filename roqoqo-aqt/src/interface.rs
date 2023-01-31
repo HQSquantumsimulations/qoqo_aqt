@@ -15,7 +15,7 @@ use roqoqo::Circuit;
 use roqoqo::RoqoqoBackendError;
 
 // Pragma operations that are ignored by backend and do not throw an error
-const ALLOWED_OPERATIONS: &[&str; 11] = &[
+const ALLOWED_OPERATIONS: &[&str; 12] = &[
     "PragmaSetNumberOfMeasurements",
     "PragmaBoostNoise",
     "PragmaStopParallelBlock",
@@ -24,9 +24,12 @@ const ALLOWED_OPERATIONS: &[&str; 11] = &[
     "DefinitionFloat",
     "DefinitionComplex",
     "InputSymbolic",
+    "InputBit",
     "PragmaRepeatedMeasurement",
     "PragmaStartDecompositionBlock",
     "PragmaStopDecompositionBlock",
+    // "PragmaLoop",                  // CHECK
+    // "PhaseShiftedControlledPhase", // CHECK
 ];
 
 /// Representation for AQT backend instructions serialized to Json

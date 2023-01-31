@@ -23,4 +23,4 @@ Note that a valid AQT access token is required to run circuits.
 """
 
 from .qoqo_aqt import *
-__license__ = "Apache-2.0 for linked dependencies see qoqo_aqt/LICSENSE_FOR_BINARY_DISTRIBUTION"
+__license__ = "Apache-2.0 for linked dependencies see qoqo_aqt/LICENSE_FOR_BINARY_DISTRIBUTION"
