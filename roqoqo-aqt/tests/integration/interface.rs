@@ -97,7 +97,7 @@ fn test_passing_interface(operation: operations::Operation, instruction: AqtInst
 #[test_case(operations::DefinitionFloat::new("test".to_string(),1,false).into(); "DefinitionFloat")]
 #[test_case(operations::DefinitionComplex::new("test".to_string(),1,false).into(); "DefinitionComplex")]
 #[test_case(operations::InputSymbolic::new("test".to_string(),1.0).into(); "InputSymbolic")]
-fn test_passing_withou_error(operation: operations::Operation) {
+fn test_passing_without_error(operation: operations::Operation) {
     let called = call_operation(&operation).unwrap();
     assert_eq!(None, called);
 }
