@@ -1,4 +1,4 @@
-// Copyright © 2021 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2023 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -23,26 +23,14 @@ use pyo3::prelude::*;
 use pyo3::types::PyDict;
 use pyo3::wrap_pymodule;
 
-/// Collection of devices for AQT Backend of qoqo
-///
-/// AQT devices, provide necessary information about the endpoint the Circuits are run on.
-///
-/// .. autosummary::
-///     :toctree: generated/
-///
-///     SimulatorDevice
-///
 pub mod devices;
-use devices::*;
 
 mod backend;
-pub use backend::*;
+pub use backend::{convert_into_backend, BackendWrapper};
 
-/// Quantum Operation Quantum Operation (qoqo)
+/// AQT python interface
 ///
-/// Yes, we use reduplication.
-///
-/// qoqo is the HQS python package to represent quantum circuits.
+/// Provides the devices that are used to execute quantum programs with the AQT backend, as well as the AQT backend.
 ///
 /// .. autosummary::
 ///     :toctree: generated/
@@ -53,11 +41,13 @@ pub use backend::*;
 #[pymodule]
 fn qoqo_aqt(_py: Python, module: &PyModule) -> PyResult<()> {
     module.add_class::<BackendWrapper>()?;
-    let wrapper = wrap_pymodule!(devices);
+
+    let wrapper = wrap_pymodule!(devices::aqt_devices);
     module.add_wrapped(wrapper)?;
+
     // Adding nice imports corresponding to maturin example
     let system = PyModule::import(_py, "sys")?;
     let system_modules: &PyDict = system.getattr("modules")?.downcast()?;
-    system_modules.set_item("qoqo_aqt.devices", module.getattr("devices")?)?;
+    system_modules.set_item("qoqo_aqt.devices", module.getattr("aqt_devices")?)?;
     Ok(())
 }

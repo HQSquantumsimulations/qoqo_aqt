@@ -1,4 +1,4 @@
-// Copyright © 2021 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2023 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -15,7 +15,7 @@ use roqoqo::Circuit;
 use roqoqo::RoqoqoBackendError;
 
 // Pragma operations that are ignored by backend and do not throw an error
-const ALLOWED_OPERATIONS: &[&str; 11] = &[
+const ALLOWED_OPERATIONS: &[&str; 12] = &[
     "PragmaSetNumberOfMeasurements",
     "PragmaBoostNoise",
     "PragmaStopParallelBlock",
@@ -24,9 +24,12 @@ const ALLOWED_OPERATIONS: &[&str; 11] = &[
     "DefinitionFloat",
     "DefinitionComplex",
     "InputSymbolic",
+    "InputBit",
     "PragmaRepeatedMeasurement",
     "PragmaStartDecompositionBlock",
     "PragmaStopDecompositionBlock",
+    // "PragmaLoop",                  // CHECK
+    // "PhaseShiftedControlledPhase", // CHECK
 ];
 
 /// Representation for AQT backend instructions serialized to Json

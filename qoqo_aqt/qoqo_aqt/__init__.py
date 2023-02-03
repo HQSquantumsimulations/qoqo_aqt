@@ -1,4 +1,4 @@
-# Copyright © 2019-2021 HQS Quantum Simulations GmbH. All Rights Reserved.
+# Copyright © 2019-2023 HQS Quantum Simulations GmbH. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 # in compliance with the License. You may obtain a copy of the License at
@@ -23,4 +23,4 @@ Note that a valid AQT access token is required to run circuits.
 """
 
 from .qoqo_aqt import *
-__license__ = "Apache-2.0 for linked dependencies see qoqo_aqt/LICSENSE_FOR_BINARY_DISTRIBUTION"
+__license__ = "Apache-2.0 for linked dependencies see qoqo_aqt/LICENSE_FOR_BINARY_DISTRIBUTION"

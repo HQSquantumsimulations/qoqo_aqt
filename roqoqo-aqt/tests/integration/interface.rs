@@ -1,4 +1,4 @@
-// Copyright © 2021 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2023 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -97,7 +97,7 @@ fn test_passing_interface(operation: operations::Operation, instruction: AqtInst
 #[test_case(operations::DefinitionFloat::new("test".to_string(),1,false).into(); "DefinitionFloat")]
 #[test_case(operations::DefinitionComplex::new("test".to_string(),1,false).into(); "DefinitionComplex")]
 #[test_case(operations::InputSymbolic::new("test".to_string(),1.0).into(); "InputSymbolic")]
-fn test_passing_withou_error(operation: operations::Operation) {
+fn test_passing_without_error(operation: operations::Operation) {
     let called = call_operation(&operation).unwrap();
     assert_eq!(None, called);
 }
