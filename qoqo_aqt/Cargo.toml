@@ -27,7 +27,7 @@ features = ["num-complex"]
 
 [dependencies]
 roqoqo-aqt = {version="0.6", path="../roqoqo-aqt"}
-qoqo_calculator = {version="1.1.0"}
+qoqo_calculator = {version="1.1.1"}
 qoqo_calculator_pyo3 = {version="1.1.0", default-features=false}
 qoqo = {version="1.2.0", default-features=false}
 roqoqo = {version="1.2.0"}
