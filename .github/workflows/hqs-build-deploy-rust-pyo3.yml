@@ -7,22 +7,23 @@ on:
 
 jobs:
 
-  deploy_cratesio:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: Swatinem/rust-cache@v2
-    - uses: actions-rs/toolchain@v1
-      with:
-        profile: minimal
-        toolchain: stable
-        default: true
-    - name: setup cargo
-      run: |
-        cargo login ${{ secrets.CRATES_IO_API_TOKEN }}
-        cargo publish --manifest-path=roqoqo-aqt/Cargo.toml
-        sleep 45
-        cargo publish --manifest-path=qoqo_aqt/Cargo.toml
+  # deploy_cratesio:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - uses: Swatinem/rust-cache@v2
+  #   - uses: actions-rs/toolchain@v1
+  #     with:
+  #       profile: minimal
+  #       toolchain: stable
+  #       default: true
+  #   - name: setup cargo
+  #     run: |
+  #       cargo login ${{ secrets.CRATES_IO_API_TOKEN }}
+  #       cargo publish --manifest-path=roqoqo-aqt/Cargo.toml
+  #       sleep 45
+  #       cargo publish --manifest-path=qoqo_aqt/Cargo.toml
+
 # Build linux wheels and upload them to PyPi
   build_maturin_builds_linux:
     name: maturin_build-linux
