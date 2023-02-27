@@ -19,7 +19,7 @@ jobs:
         default: true
     - name: setup cargo
       run: |
-        cargo login ${{ secrets.CRATES_IO_API_TOKEN }}
+        # cargo login ${{ secrets.CRATES_IO_API_TOKEN }}
         # cargo publish --manifest-path=roqoqo-aqt/Cargo.toml
         # sleep 45
         # cargo publish --manifest-path=qoqo_aqt/Cargo.toml
