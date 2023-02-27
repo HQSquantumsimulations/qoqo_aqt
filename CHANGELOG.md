@@ -7,11 +7,11 @@ This changelog track changes to the qoqo aqt project starting at version 0.3.0
 ## 0.6.1
 
 * Updated to qoqo 1.2.5 and qoqo_calculator 1.1.1
+* Updated to pyo3 0.18
 
 ## 0.6.0
 
 * Updated to qoqo 1.2.0 and qoqo_calculator 1.1.0
-* Updated to pyo3 0.18
 
 ## 0.5.1
 
