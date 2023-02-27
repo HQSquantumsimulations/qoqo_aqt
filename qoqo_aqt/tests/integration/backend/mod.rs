@@ -31,13 +31,13 @@ fn test_creating_backend() {
         let device = device_type
             .call1((3,))
             .unwrap()
-            .cast_as::<PyCell<devices::SimulatorDeviceWrapper>>()
+            .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
             .unwrap();
         let backend_type = py.get_type::<BackendWrapper>();
         let _backend = backend_type
             .call1((device, "DUMMY_ACCESS_TOKEN"))
             .unwrap()
-            .cast_as::<PyCell<BackendWrapper>>()
+            .downcast::<PyCell<BackendWrapper>>()
             .unwrap();
     });
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
@@ -46,13 +46,13 @@ fn test_creating_backend() {
             let device = device_type
                 .call1((3,))
                 .unwrap()
-                .cast_as::<PyCell<devices::SimulatorDeviceWrapper>>()
+                .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
                 .unwrap();
             let backend_type = py.get_type::<BackendWrapper>();
             let _backend = backend_type
                 .call1((device,))
                 .unwrap()
-                .cast_as::<PyCell<BackendWrapper>>()
+                .downcast::<PyCell<BackendWrapper>>()
                 .unwrap();
         })
     } else {
@@ -61,7 +61,7 @@ fn test_creating_backend() {
             let device = device_type
                 .call1((3,))
                 .unwrap()
-                .cast_as::<PyCell<devices::SimulatorDeviceWrapper>>()
+                .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
                 .unwrap();
             let backend_type = py.get_type::<BackendWrapper>();
             let backend = backend_type.call1((device,));
@@ -89,13 +89,13 @@ fn test_running_circuit() {
             let device = device_type
                 .call1((3,))
                 .unwrap()
-                .cast_as::<PyCell<devices::SimulatorDeviceWrapper>>()
+                .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
                 .unwrap();
             let backend_type = py.get_type::<BackendWrapper>();
             let backend = backend_type
                 .call1((device,))
                 .unwrap()
-                .cast_as::<PyCell<BackendWrapper>>()
+                .downcast::<PyCell<BackendWrapper>>()
                 .unwrap();
             let _ = backend
                 .call_method1("run_circuit", (circuit_wrapper,))
@@ -126,13 +126,13 @@ fn test_running_measurement() {
             let device = device_type
                 .call1((3,))
                 .unwrap()
-                .cast_as::<PyCell<devices::SimulatorDeviceWrapper>>()
+                .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
                 .unwrap();
             let backend_type = py.get_type::<BackendWrapper>();
             let backend = backend_type
                 .call1((device,))
                 .unwrap()
-                .cast_as::<PyCell<BackendWrapper>>()
+                .downcast::<PyCell<BackendWrapper>>()
                 .unwrap();
             let _ = backend
                 .call_method1("run_measurement_registers", (crm_wrapper,))

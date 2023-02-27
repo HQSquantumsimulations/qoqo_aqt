@@ -28,7 +28,7 @@ fn test_creating_device(number_qubits: usize) {
         let device = device_type
             .call1((number_qubits,))
             .unwrap()
-            .cast_as::<PyCell<devices::SimulatorDeviceWrapper>>()
+            .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
             .unwrap();
 
         let get_number_qubits = device
@@ -55,7 +55,7 @@ fn test_creating_noisy_device(number_qubits: usize) {
         let device = device_type
             .call1((number_qubits,))
             .unwrap()
-            .cast_as::<PyCell<devices::NoisySimulatorDeviceWrapper>>()
+            .downcast::<PyCell<devices::NoisySimulatorDeviceWrapper>>()
             .unwrap();
 
         let get_number_qubits = device
