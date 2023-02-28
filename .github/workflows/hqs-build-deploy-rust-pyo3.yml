@@ -65,7 +65,7 @@ jobs:
           maturin-version: latest
           command: build
           manylinux: 2014
-          args: --find-interpreter --out wheels -m ${{inputs.py_interface_folder}}/Cargo.toml --release --locked --zig
+          args: --find-interpreter --out wheels -m qoqo_aqt/Cargo.toml --release --locked --zig
       - name: store artifact
         uses: actions/upload-artifact@v3
         with:
