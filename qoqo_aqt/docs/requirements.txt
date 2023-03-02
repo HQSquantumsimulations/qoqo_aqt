@@ -1,5 +1,5 @@
-qoqo>=1.2.5
-qoqo_calculator_pyo3>=1.1.0
+qoqo>=1.2
+qoqo_calculator_pyo3>=1.1
 numpy
 sphinx >= 2.1
 nbsphinx
@@ -7,4 +7,4 @@ pygments
 recommonmark
 myst_parser
 sphinx_rtd_theme
-qoqo_aqt>=0.6.1
+qoqo_aqt>=0.6
