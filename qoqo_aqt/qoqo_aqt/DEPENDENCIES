@@ -1205,7 +1205,7 @@ limitations under the License.
 
 
 ====================================================
-bytemuck 1.13.0
+bytemuck 1.13.1
 https://github.com/Lokathor/bytemuck
 by Lokathor <zefria@gmail.com>
 A crate for mucking around with piles of bytes.
@@ -5996,7 +5996,7 @@ limitations under the License.
 
 
 ====================================================
-h2 0.3.15
+h2 0.3.16
 https://github.com/hyperium/h2
 by Carl Lerche <me@carllerche.com>, Sean McArthur <sean@seanmonstar.com>
 An HTTP/2 client and server
@@ -27549,7 +27549,7 @@ LICENSE-APACHE.md:
 
 
 ====================================================
-tokio 1.25.0
+tokio 1.26.0
 https://tokio.rs
 by Tokio Contributors <team@tokio.rs>
 An event-driven, non-blocking I/O platform for writing asynchronous I/O
