@@ -6,6 +6,8 @@ This product in binary form links dynamically against Python  available under th
 Python (Copyright © 2001-2023 Python Software Foundation; All Rights
 Reserved)
 
+This product in binary form links against OpenSSL. Depending on the linked version of OpenSSL the dual OpenSSL and SSLeay license applies (see file OPENSSL_LICENSE) or the Apache-2.0 license applies (since version 3.0).
+
 This product in binary form on the linux platform links against openSSL as covered by the license found in the OPENSSL_LICENSE file.
 
 
