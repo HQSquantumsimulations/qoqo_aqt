@@ -45,7 +45,7 @@ RUSTFLAGS="-C link-arg=-undefined -C link-arg=dynamic_lookup" maturin build -m q
 pip install target/wheels/$NAME_OF_WHEEL
 ```
 
-A source distribution now exists but requires a Rust install with a rust version > 1.47 and a maturin version { >= 0.12, <0.13 } in order to be built.
+A source distribution now exists but requires a Rust install with a rust version > 1.56 and a maturin version { >= 0.14, <0.15 } in order to be built.
 
 ## roqoqo-aqt
 
@@ -67,3 +67,14 @@ This project is partly supported by [PlanQK](https://planqk.de).
 ## Contributing
 
 We welcome contributions to the project. If you want to contribute code, please have a look at CONTRIBUTE.md for our code contribution guidelines.
+
+## OpenSSL
+
+Acknowledgments related to using OpenSSL for http requests:
+
+"This product includes software developed by the OpenSSL Project
+for use in the OpenSSL Toolkit (http://www.openssl.org/)."
+
+This product includes cryptographic software written by Eric Young
+(eay@cryptsoft.com).  This product includes software written by Tim
+Hudson (tjh@cryptsoft.com).
