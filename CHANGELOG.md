@@ -5,7 +5,7 @@ This changelog track changes to the qoqo aqt project starting at version 0.3.0
 ## Not released
 
 ## 0.6.2
-* Updated dependencies
+* Updated dependencies from openssl security advisories
 
 ## 0.6.1
 
