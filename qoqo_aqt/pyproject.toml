@@ -18,7 +18,8 @@ docs = [
     "pygments",
     "recommonmark",
     "myst_parser",
-    "sphinx_rtd_theme"
+    "sphinx_rtd_theme",
+    "tomli"
 ]
 
 [build-system]
