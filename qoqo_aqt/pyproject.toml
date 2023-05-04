@@ -18,8 +18,7 @@ docs = [
     "pygments",
     "recommonmark",
     "myst_parser",
-    "sphinx_rtd_theme",
-    "qoqo_aqt>=0.6"
+    "sphinx_rtd_theme"
 ]
 
 [build-system]
