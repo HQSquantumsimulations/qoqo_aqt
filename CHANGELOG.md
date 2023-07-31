@@ -4,6 +4,9 @@ This changelog track changes to the qoqo aqt project starting at version 0.3.0
 
 ## Not released
 
+## 0.6.5
+* Updated dependencies and qoqo version to 1.5
+
 ## 0.6.4
 * Updated dependencies and qoqo version to 1.4
 
