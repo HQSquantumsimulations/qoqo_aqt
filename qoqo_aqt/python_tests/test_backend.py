@@ -22,20 +22,28 @@ from typing import List
 
 
 @pytest.mark.parametrize(
-    'measurement',
-    [(ops.MeasureQubit(qubit=0, readout='ro', readout_index=0), int, 0),
-     (ops.PragmaRepeatedMeasurement(readout='ro', number_measurements=10), int, 0),
-     (ops.PragmaGetPauliProduct(qubit_paulis={0: 1, 1: 2}, readout='ro', circuit=Circuit()), float, 1),
-     (ops.PragmaGetOccupationProbability(readout='ro', circuit=Circuit()), float, 1),
-     (ops.PragmaGetStateVector(readout='ro', circuit=Circuit()), complex, 2),
-     (ops.PragmaGetDensityMatrix(readout='ro', circuit=Circuit()), int, 2),
-    ])
+    "measurement",
+    [
+        (ops.MeasureQubit(qubit=0, readout="ro", readout_index=0), int, 0),
+        (ops.PragmaRepeatedMeasurement(readout="ro", number_measurements=10), int, 0),
+        (
+            ops.PragmaGetPauliProduct(
+                qubit_paulis={0: 1, 1: 2}, readout="ro", circuit=Circuit()
+            ),
+            float,
+            1,
+        ),
+        (ops.PragmaGetOccupationProbability(readout="ro", circuit=Circuit()), float, 1),
+        (ops.PragmaGetStateVector(readout="ro", circuit=Circuit()), complex, 2),
+        (ops.PragmaGetDensityMatrix(readout="ro", circuit=Circuit()), int, 2),
+    ],
+)
 def test_mocked_backend(measurement):
     """Test mocked backend"""
     circuit = Circuit()
-    circuit += ops.DefinitionFloat(name='ro', length=1, is_output=True)
-    circuit += ops.DefinitionComplex(name='ro', length=1, is_output=True)
-    circuit += ops.DefinitionBit(name='ro', length=1, is_output=True)
+    circuit += ops.DefinitionFloat(name="ro", length=1, is_output=True)
+    circuit += ops.DefinitionComplex(name="ro", length=1, is_output=True)
+    circuit += ops.DefinitionBit(name="ro", length=1, is_output=True)
     circuit += ops.PauliX(qubit=0)
     circuit += measurement[0]
 
@@ -49,5 +57,5 @@ def test_mocked_backend(measurement):
     #     assert isinstance(results[0], measurement[1])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main(sys.argv)
