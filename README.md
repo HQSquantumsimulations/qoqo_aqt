@@ -4,7 +4,6 @@
 
 **As the `https://gateway.aqt.eu/` service is no longer available, this project has been archived.**
 
-
 AQT-backend for the qoqo/roqoqo quantum toolkit by [HQS Quantum Simulations](https://quantumsimulations.de).
 
 The qoqo_aqt/roqoqo-aqt packages provide backends for qoqo/roqoqo that allow the users to run quantum circuits on AQT simulators or AQT hardware.
