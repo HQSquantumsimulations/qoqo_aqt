@@ -1,6 +1,6 @@
 [package]
 name = "qoqo-aqt"
-version = "0.6.4"
+version = "0.6.6"
 authors = ["HQS Quantum Simulations <info@quantumsimulations.de>"]
 license = "Apache-2.0"
 homepage = "https://github.com/HQSquantumsimulations/qoqo_aqt"
@@ -22,7 +22,7 @@ doctest = false
 crate-type = ["cdylib", "rlib"]
 
 [dependencies.pyo3]
-version = "0.18"
+version = "0.20"
 features = ["num-complex"]
 
 [dependencies]
@@ -41,7 +41,7 @@ serde_json = "1.0"
 test-case = "3.0"
 
 [build-dependencies]
-pyo3-build-config = "0.19"
+pyo3-build-config = "0.20"
 
 [features]
 extension-module = ["pyo3/extension-module"]
