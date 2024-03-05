@@ -12,7 +12,7 @@
 """AQT backend for the qoqo quantum toolkit.
 
 Allows the user to run qoqo Circuits on AQT simulators and AQT hardware (soon).
-Note that a valid AQT access token is required to run circuits. 
+Note that a valid AQT access token is required to run circuits.
 
 .. autosummary::
     :toctree: generated/
@@ -22,5 +22,8 @@ Note that a valid AQT access token is required to run circuits.
 
 """
 
-from .qoqo_aqt import *
-__license__ = "Apache-2.0 for linked dependencies see qoqo_aqt/LICENSE_FOR_BINARY_DISTRIBUTION"
+from .qoqo_aqt import *  # noqa: F403
+
+__license__ = (
+    "Apache-2.0 for linked dependencies see qoqo_aqt/LICENSE_FOR_BINARY_DISTRIBUTION"
+)
