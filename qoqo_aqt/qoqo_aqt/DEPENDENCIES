@@ -19111,7 +19111,7 @@ LICENSE:
 
 
 ====================================================
-qoqo-aqt 0.6.1
+qoqo-aqt 0.6.2
 https://github.com/HQSquantumsimulations/qoqo_aqt
 by HQS Quantum Simulations <info@quantumsimulations.de>
 AQT backend for qoqo quantum computing toolkit
@@ -21841,7 +21841,7 @@ LICENSE:
 
 
 ====================================================
-roqoqo-aqt 0.6.1
+roqoqo-aqt 0.6.2
 https://github.com/HQSquantumsimulations/qoqo_aqt
 by HQS Quantum Simulations <info@quantumsimulations.de>
 AQT interface for roqoqo rust quantum computing toolkit

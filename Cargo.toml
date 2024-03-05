@@ -4,6 +4,8 @@ members = [
     "qoqo_aqt",
 ]
 
+resolver = "2"
+
 [profile.release]
 lto = true
 
