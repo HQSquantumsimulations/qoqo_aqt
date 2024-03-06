@@ -1,6 +1,8 @@
 <img src="qoqo_Logo_vertical_color.png" alt="qoqo logo" width="300" />
 
-# qoqo-aqt
+# ARCHIVED REPOSITORY
+
+**As the `https://gateway.aqt.eu/` service is no longer available, this project has been archived.**
 
 AQT-backend for the qoqo/roqoqo quantum toolkit by [HQS Quantum Simulations](https://quantumsimulations.de).
 
@@ -15,11 +17,11 @@ This repository contains two components:
 
 ## qoqo_aqt
 
-[![Documentation Status](https://img.shields.io/badge/docs-documentation-green)](https://hqsquantumsimulations.github.io/qoqo_aqt/)
+<!-- [![Documentation Status](https://img.shields.io/badge/docs-documentation-green)](https://hqsquantumsimulations.github.io/qoqo_aqt/)
 [![GitHub Workflow Status](https://github.com/HQSquantumsimulations/qoqo_aqt/workflows/ci_tests/badge.svg)](https://github.com/HQSquantumsimulations/qoqo_aqt/actions)
 [![PyPI](https://img.shields.io/pypi/v/qoqo_aqt)](https://pypi.org/project/qoqo_aqt/)
 ![PyPI - License](https://img.shields.io/pypi/l/qoqo_aqt)
-[![PyPI - Format](https://img.shields.io/pypi/format/qoqo_aqt)](https://pypi.org/project/qoqo_aqt/)
+[![PyPI - Format](https://img.shields.io/pypi/format/qoqo_aqt)](https://pypi.org/project/qoqo_aqt/) -->
 
 AQT-backend for the qoqo quantum toolkit by [HQS Quantum Simulations](https://quantumsimulations.de).
 
@@ -49,10 +51,10 @@ A source distribution now exists but requires a Rust install with a rust version
 
 ## roqoqo-aqt
 
-[![Crates.io](https://img.shields.io/crates/v/roqoqo-aqt)](https://crates.io/crates/roqoqo-aqt)
+<!-- [![Crates.io](https://img.shields.io/crates/v/roqoqo-aqt)](https://crates.io/crates/roqoqo-aqt)
 [![GitHub Workflow Status](https://github.com/HQSquantumsimulations/qoqo_mock/workflows/ci_tests/badge.svg)](https://github.com/HQSquantumsimulations/qoqo_aqt/actions)
 [![docs.rs](https://img.shields.io/docsrs/roqoqo-aqt)](https://docs.rs/roqoqo-aqt/)
-![Crates.io](https://img.shields.io/crates/l/roqoqo-aqt)
+![Crates.io](https://img.shields.io/crates/l/roqoqo-aqt) -->
 
 AQT-Backend for the roqoqo quantum toolkit by [HQS Quantum Simulations](https://quantumsimulations.de).
 
