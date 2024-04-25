@@ -39,15 +39,16 @@ pub use backend::{convert_into_backend, BackendWrapper};
 ///     devices
 ///
 #[pymodule]
-fn qoqo_aqt(_py: Python, module: &PyModule) -> PyResult<()> {
+fn qoqo_aqt(_py: Python, module: &Bound<PyModule>) -> PyResult<()> {
     module.add_class::<BackendWrapper>()?;
 
     let wrapper = wrap_pymodule!(devices::aqt_devices);
     module.add_wrapped(wrapper)?;
 
     // Adding nice imports corresponding to maturin example
-    let system = PyModule::import(_py, "sys")?;
-    let system_modules: &PyDict = system.getattr("modules")?.downcast()?;
+    let system = PyModule::import_bound(_py, "sys")?;
+    let binding = system.getattr("modules")?;
+    let system_modules: &Bound<PyDict> = binding.downcast()?;
     system_modules.set_item("qoqo_aqt.devices", module.getattr("aqt_devices")?)?;
     Ok(())
 }

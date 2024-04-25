@@ -24,11 +24,10 @@ use test_case::test_case;
 fn test_creating_device(number_qubits: usize) {
     pyo3::prepare_freethreaded_python();
     Python::with_gil(|py| {
-        let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
-        let device = device_type
-            .call1((number_qubits,))
-            .unwrap()
-            .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
+        let device_type = py.get_type_bound::<devices::SimulatorDeviceWrapper>();
+        let binding = device_type.call1((number_qubits,)).unwrap();
+        let device = binding
+            .downcast::<devices::SimulatorDeviceWrapper>()
             .unwrap();
 
         let get_number_qubits = device
@@ -51,11 +50,10 @@ fn test_creating_device(number_qubits: usize) {
 fn test_creating_noisy_device(number_qubits: usize) {
     pyo3::prepare_freethreaded_python();
     Python::with_gil(|py| {
-        let device_type = py.get_type::<devices::NoisySimulatorDeviceWrapper>();
-        let device = device_type
-            .call1((number_qubits,))
-            .unwrap()
-            .downcast::<PyCell<devices::NoisySimulatorDeviceWrapper>>()
+        let device_type = py.get_type_bound::<devices::NoisySimulatorDeviceWrapper>();
+        let binding = device_type.call1((number_qubits,)).unwrap();
+        let device = binding
+            .downcast::<devices::NoisySimulatorDeviceWrapper>()
             .unwrap();
 
         let get_number_qubits = device
