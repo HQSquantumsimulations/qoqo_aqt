@@ -28,10 +28,10 @@ features = ["num-complex"]
 [dependencies]
 roqoqo-aqt = { version = "0.7", path = "../roqoqo-aqt" }
 
-qoqo_calculator = { version = "1.2" }
-qoqo_calculator_pyo3 = { version = "1.2", default-features = false }
-qoqo = { version = "1.12", default-features = false }
-roqoqo = { version = "1.12" }
+qoqo_calculator = { version = "~1.2" }
+qoqo_calculator_pyo3 = { version = "~1.2", default-features = false }
+qoqo = { version = "~1.13", default-features = false }
+roqoqo = { version = "~1.13" }
 
 serde = { version = "1.0", features = ["derive"] }
 bincode = "1.3"
