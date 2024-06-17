@@ -34,7 +34,7 @@ use pyo3::prelude::*;
 // ///    NoisySimulatorDevice
 // ///
 #[pymodule]
-pub fn aqt_devices(_py: Python, m: &PyModule) -> PyResult<()> {
+pub fn aqt_devices(_py: Python, m: &Bound<PyModule>) -> PyResult<()> {
     m.add_class::<SimulatorDeviceWrapper>()?;
     m.add_class::<NoisySimulatorDeviceWrapper>()?;
     Ok(())

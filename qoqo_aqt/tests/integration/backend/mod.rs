@@ -27,44 +27,41 @@ use std::env;
 fn test_creating_backend() {
     pyo3::prepare_freethreaded_python();
     Python::with_gil(|py| {
-        let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
-        let device = device_type
-            .call1((3,))
-            .unwrap()
-            .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
-            .unwrap();
-        let backend_type = py.get_type::<BackendWrapper>();
+        let device_type = py.get_type_bound::<devices::SimulatorDeviceWrapper>();
+        let device = device_type.call1((3,)).unwrap();
+        let backend_type = py.get_type_bound::<BackendWrapper>();
         let _backend = backend_type
-            .call1((device, "DUMMY_ACCESS_TOKEN"))
+            .call1((
+                device
+                    .downcast::<devices::SimulatorDeviceWrapper>()
+                    .unwrap(),
+                "DUMMY_ACCESS_TOKEN",
+            ))
             .unwrap()
-            .downcast::<PyCell<BackendWrapper>>()
+            .downcast::<BackendWrapper>()
             .unwrap();
     });
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
         Python::with_gil(|py| {
-            let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
-            let device = device_type
-                .call1((3,))
-                .unwrap()
-                .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
-                .unwrap();
-            let backend_type = py.get_type::<BackendWrapper>();
+            let device_type = py.get_type_bound::<devices::SimulatorDeviceWrapper>();
+            let device = device_type.call1((3,)).unwrap();
+            let backend_type = py.get_type_bound::<BackendWrapper>();
             let _backend = backend_type
-                .call1((device,))
+                .call1((device
+                    .downcast::<devices::SimulatorDeviceWrapper>()
+                    .unwrap(),))
                 .unwrap()
-                .downcast::<PyCell<BackendWrapper>>()
+                .downcast::<BackendWrapper>()
                 .unwrap();
         })
     } else {
         Python::with_gil(|py| {
-            let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
-            let device = device_type
-                .call1((3,))
-                .unwrap()
-                .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
-                .unwrap();
-            let backend_type = py.get_type::<BackendWrapper>();
-            let backend = backend_type.call1((device,));
+            let device_type = py.get_type_bound::<devices::SimulatorDeviceWrapper>();
+            let device = device_type.call1((3,)).unwrap();
+            let backend_type = py.get_type_bound::<BackendWrapper>();
+            let backend = backend_type.call1((device
+                .downcast::<devices::SimulatorDeviceWrapper>()
+                .unwrap(),));
             match backend {
                 Err(_) => (),
                 _ => panic!("Missing Access Token does not return correct error"),
@@ -85,19 +82,17 @@ fn test_running_circuit() {
     let circuit_wrapper = CircuitWrapper { internal: circuit };
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
         Python::with_gil(|py| {
-            let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
-            let device = device_type
-                .call1((3,))
-                .unwrap()
-                .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
-                .unwrap();
-            let backend_type = py.get_type::<BackendWrapper>();
+            let device_type = py.get_type_bound::<devices::SimulatorDeviceWrapper>();
+            let device = device_type.call1((3,)).unwrap();
+            let backend_type = py.get_type_bound::<BackendWrapper>();
             let backend = backend_type
-                .call1((device,))
-                .unwrap()
-                .downcast::<PyCell<BackendWrapper>>()
+                .call1((device
+                    .downcast::<devices::SimulatorDeviceWrapper>()
+                    .unwrap(),))
                 .unwrap();
             let _ = backend
+                .downcast::<BackendWrapper>()
+                .unwrap()
                 .call_method1("run_circuit", (circuit_wrapper,))
                 .unwrap();
         })
@@ -122,19 +117,17 @@ fn test_running_measurement() {
     };
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
         Python::with_gil(|py| {
-            let device_type = py.get_type::<devices::SimulatorDeviceWrapper>();
-            let device = device_type
-                .call1((3,))
-                .unwrap()
-                .downcast::<PyCell<devices::SimulatorDeviceWrapper>>()
-                .unwrap();
-            let backend_type = py.get_type::<BackendWrapper>();
+            let device_type = py.get_type_bound::<devices::SimulatorDeviceWrapper>();
+            let device = device_type.call1((3,)).unwrap();
+            let backend_type = py.get_type_bound::<BackendWrapper>();
             let backend = backend_type
-                .call1((device,))
-                .unwrap()
-                .downcast::<PyCell<BackendWrapper>>()
+                .call1((device
+                    .downcast::<devices::SimulatorDeviceWrapper>()
+                    .unwrap(),))
                 .unwrap();
             let _ = backend
+                .downcast::<BackendWrapper>()
+                .unwrap()
                 .call_method1("run_measurement_registers", (crm_wrapper,))
                 .unwrap();
         })

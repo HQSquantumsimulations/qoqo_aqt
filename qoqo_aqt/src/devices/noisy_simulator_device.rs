@@ -65,7 +65,7 @@ impl NoisySimulatorDeviceWrapper {
         let serialized = serialize(&self.internal)
             .map_err(|_| PyValueError::new_err("Cannot serialize SimulatorDevice to bytes"))?;
         let b: Py<PyByteArray> = Python::with_gil(|py| -> Py<PyByteArray> {
-            PyByteArray::new(py, &serialized[..]).into()
+            PyByteArray::new_bound(py, &serialized[..]).into()
         });
         Ok(b)
     }
@@ -82,7 +82,7 @@ impl NoisySimulatorDeviceWrapper {
     ///     TypeError: Input cannot be converted to byte array.
     ///     ValueError: Input cannot be deserialized to SimulatorDevice.
     #[staticmethod]
-    pub fn from_bincode(input: &PyAny) -> PyResult<NoisySimulatorDeviceWrapper> {
+    pub fn from_bincode(input: &Bound<PyAny>) -> PyResult<NoisySimulatorDeviceWrapper> {
         let bytes = input
             .extract::<Vec<u8>>()
             .map_err(|_| PyTypeError::new_err("Input cannot be converted to byte array"))?;
@@ -158,7 +158,7 @@ impl NoisySimulatorDeviceWrapper {
         let serialized = serialize(&aqt_enum)
             .map_err(|_| PyValueError::new_err("Cannot serialize SimulatorDevice to bytes"))?;
         let b: Py<PyByteArray> = Python::with_gil(|py| -> Py<PyByteArray> {
-            PyByteArray::new(py, &serialized[..]).into()
+            PyByteArray::new_bound(py, &serialized[..]).into()
         });
         Ok(b)
     }

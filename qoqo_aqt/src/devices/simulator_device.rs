@@ -66,7 +66,7 @@ impl SimulatorDeviceWrapper {
         let serialized = serialize(&self.internal)
             .map_err(|_| PyValueError::new_err("Cannot serialize SimulatorDevice to bytes"))?;
         let b: Py<PyByteArray> = Python::with_gil(|py| -> Py<PyByteArray> {
-            PyByteArray::new(py, &serialized[..]).into()
+            PyByteArray::new_bound(py, &serialized[..]).into()
         });
         Ok(b)
     }
@@ -83,7 +83,7 @@ impl SimulatorDeviceWrapper {
     ///     TypeError: Input cannot be converted to byte array.
     ///     ValueError: Input cannot be deserialized to SimulatorDevice.
     #[staticmethod]
-    pub fn from_bincode(input: &PyAny) -> PyResult<SimulatorDeviceWrapper> {
+    pub fn from_bincode(input: &Bound<PyAny>) -> PyResult<SimulatorDeviceWrapper> {
         let bytes = input
             .extract::<Vec<u8>>()
             .map_err(|_| PyTypeError::new_err("Input cannot be converted to byte array"))?;
@@ -159,7 +159,7 @@ impl SimulatorDeviceWrapper {
         let serialized = serialize(&aqt_enum)
             .map_err(|_| PyValueError::new_err("Cannot serialize SimulatorDevice to bytes"))?;
         let b: Py<PyByteArray> = Python::with_gil(|py| -> Py<PyByteArray> {
-            PyByteArray::new(py, &serialized[..]).into()
+            PyByteArray::new_bound(py, &serialized[..]).into()
         });
         Ok(b)
     }
@@ -168,7 +168,7 @@ impl SimulatorDeviceWrapper {
 /// Convert generic python object to [roqoqo_aqt::AqtDevice].
 ///
 /// Fallible conversion of generic python object to [roqoqo::SimulatorDevice].
-pub fn convert_into_device(input: &PyAny) -> Result<AqtDevice, QoqoBackendError> {
+pub fn convert_into_device(input: &Bound<PyAny>) -> Result<AqtDevice, QoqoBackendError> {
     // Everything that follows tries to extract the circuit when two separately
     // compiled python packages are involved
     let get_bytes = input

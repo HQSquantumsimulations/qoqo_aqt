@@ -4,6 +4,11 @@ This changelog track changes to the qoqo aqt project starting at version 0.3.0
 
 ## Not released
 
+## 0.7.0
+
+* Updated to pyo3 0.21
+* Updated to qoqo 1.12 and qoqo_calculator 1.2
+
 ## 0.6.6
 
 * Updated dependencies (including mio v0.8.10->v0.8.11)

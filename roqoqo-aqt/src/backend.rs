@@ -83,7 +83,7 @@ impl Backend {
         let access_token_internal: String = match access_token {
             Some(s) => s,
             None => env::var("AQT_ACCESS_TOKEN").map_err(|_| {
-                RoqoqoBackendError::MissingAuthentification {
+                RoqoqoBackendError::MissingAuthentication {
                     msg: "AQT access token is missing".to_string(),
                 }
             })?,
@@ -137,20 +137,20 @@ impl EvaluatingBackend for Backend {
             match op {
                 Operation::PragmaRepeatedMeasurement(o) => {
                     number_measurements = *o.number_measurements();
-                    readout = o.readout().clone();
+                    readout.clone_from(o.readout());
                     if let Some(x) = call_operation(op)? {
                         instruction_vec.push(x)
                     }
                 }
                 Operation::PragmaSetNumberOfMeasurements(o) => {
                     number_measurements = *o.number_measurements();
-                    readout = o.readout().clone();
+                    readout.clone_from(o.readout());
                     if let Some(x) = call_operation(op)? {
                         instruction_vec.push(x)
                     }
                 }
                 Operation::MeasureQubit(o) => {
-                    readout = o.readout().clone();
+                    readout.clone_from(o.readout());
                     if let Some(x) = call_operation(op)? {
                         instruction_vec.push(x)
                     }
