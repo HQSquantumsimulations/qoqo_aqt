@@ -10,10 +10,9 @@
 // express or implied. See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::devices::AqtDevice;
 use crate::{call_operation, AqtInstruction};
+use reqwest::header::{HeaderValue, ACCEPT};
 use roqoqo::backends::EvaluatingBackend;
-// use roqoqo::measurements::Measure;
 use roqoqo::backends::RegisterResult;
 use roqoqo::operations::*;
 use roqoqo::registers::{BitOutputRegister, ComplexOutputRegister, FloatOutputRegister};
@@ -21,53 +20,114 @@ use roqoqo::RoqoqoBackendError;
 use std::collections::HashMap;
 use std::env;
 use std::{thread, time};
+
 /// AQT backend
 ///
 /// provides functions to run circuits and measurements on AQT devices.
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
-pub struct Backend {
-    /// Device the backend calls to run circuits remotely
-    pub device: AqtDevice,
-    // Access token for identification with AQT devices
+pub struct Backend<T: AqtApi> {
+    /// Number of qubits supported by the device
+    pub device: T,
+    /// Access token for identification with AQT devices
     access_token: String,
 }
 
+/// Payload sent to AQT device containing a vector of AqtCircuits
+#[derive(Debug, serde::Serialize, serde::Deserialize, Default)]
+struct AqtPayload {
+    /// Vector of circuit sent to AQT device
+    circuits: Vec<AqtCircuit>,
+}
+
+/// Provides the quantum circuit that is to be simulated along with number of qubits used and number of simulation repetitions
+#[derive(Debug, serde::Serialize, serde::Deserialize, Default)]
+pub struct AqtCircuit {
+    /// Number of qubits used by AQT device
+    number_of_qubits: u32,
+    /// Quantum circuit that is to be simulated
+    quantum_circuit: Vec<AqtInstruction>,
+    /// Number of times the simulation is repeated
+    repetitions: u32,
+}
+
+/// Schema of post request body sent to AQT device to run the simulation
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 struct AqtRunData {
-    data: String,
-    access_token: String,
-    repetitions: usize,
-    no_qubits: usize,
+    /// Name of the job type
+    job_type: String,
+    /// Custom label given to job
     label: String,
+    /// Payload containing the list of quantum circuits that to be simulated on the AQT device
+    payload: AqtPayload,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
 struct AqtRunResponse {
-    id: String,
+    job: AqtJob,
     #[serde(default)]
-    status: String,
-}
-#[derive(serde::Serialize, serde::Deserialize)]
-struct AqtResultQuerry {
-    id: String,
-    access_token: String,
+    response: AqtQuerryResponse,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
-struct AqtResultQuerryResponse {
+#[derive(serde::Serialize, serde::Deserialize, Default)]
+struct AqtJob {
     #[serde(default)]
-    id: String,
+    job_id: String,
     #[serde(default)]
-    no_qubits: usize,
+    job_type: String,
     #[serde(default)]
-    received: Vec<AqtInstruction>,
+    label: String,
     #[serde(default)]
-    samples: Vec<usize>,
+    resource_id: String,
     #[serde(default)]
-    status: String,
+    workspace_id: String,
+    #[serde(default)]
+    payload: AqtPayload,
 }
 
-impl Backend {
+#[derive(serde::Serialize, serde::Deserialize, Default)]
+struct AqtQuerryResponse {
+    #[serde(default)]
+    status: String,
+    #[serde(default)]
+    finished_count: u32,
+    #[serde(default)]
+    message: String,
+    #[serde(default)]
+    result: HashMap<u32, Vec<Vec<u32>>>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+/// Provides the devices that are used to execute quantum programs with the AQT backend.
+pub struct AqtDevice {
+    /// Number of qubits supported by the device
+    pub number_qubits: usize,
+}
+
+impl AqtApi for AqtDevice {
+    /// Returns REST API endpoint to make calls to the AQT device
+    fn remote_host(&self) -> String {
+        "https://arnica.aqt.eu/api/v1/".to_string()
+    }
+    /// Return number of qubits available
+    fn number_qubits(&self) -> usize {
+        self.number_qubits
+    }
+    /// Returns whether `https_only` mode is enabled for client
+    fn is_https(&self) -> bool {
+        true
+    }
+}
+/// Defines the AQT backend on which to run quantum simulations
+pub trait AqtApi {
+    /// Returns REST API endpoint to make calls to the AQT device
+    fn remote_host(&self) -> String;
+    /// Return number of qubits available
+    fn number_qubits(&self) -> usize;
+    /// Returns whether `https_only` mode is enabled for client
+    fn is_https(&self) -> bool;
+}
+
+impl<T: AqtApi> Backend<T> {
     /// Creates a new AQT backend.
     ///
     /// # Arguments
@@ -76,10 +136,7 @@ impl Backend {
     ///            At the moment limited to the AQT simulator.
     /// `access_token` - An access_token is required to access AQT hardware and simulators.
     ///                  The access_token can either be given as an argument here or set via the environmental variable `$AQT_ACCESS_TOKEN`
-    pub fn new(
-        device: AqtDevice,
-        access_token: Option<String>,
-    ) -> Result<Self, RoqoqoBackendError> {
+    pub fn new(device: T, access_token: Option<String>) -> Result<Self, RoqoqoBackendError> {
         let access_token_internal: String = match access_token {
             Some(s) => s,
             None => env::var("AQT_ACCESS_TOKEN").map_err(|_| {
@@ -115,7 +172,7 @@ impl Backend {
     }
 }
 
-impl EvaluatingBackend for Backend {
+impl<T: AqtApi> EvaluatingBackend for Backend<T> {
     fn run_circuit_iterator<'a>(
         &self,
         circuit: impl Iterator<Item = &'a Operation>,
@@ -126,7 +183,7 @@ impl EvaluatingBackend for Backend {
 
         let mut instruction_vec: Vec<AqtInstruction> = Vec::new();
         let client = reqwest::blocking::Client::builder()
-            .https_only(true)
+            .https_only(self.device.is_https())
             .build()
             .map_err(|x| RoqoqoBackendError::NetworkError {
                 msg: format!("could not create https client {:?}", x),
@@ -186,17 +243,28 @@ impl EvaluatingBackend for Backend {
                 }
             }
         }
-        let data = AqtRunData {
-            data: serde_json::to_string(&instruction_vec).unwrap(),
-            access_token: self.access_token.clone(),
-            repetitions: number_measurements,
-            no_qubits: self.device.number_qubits(),
-            label: "custom".to_string(),
+        let aqt_instruction_circuit = AqtCircuit {
+            number_of_qubits: self.device.number_qubits() as u32,
+            quantum_circuit: instruction_vec,
+            repetitions: number_measurements as u32,
         };
+        let data = AqtRunData {
+            job_type: "quantum_circuit".to_string(),
+            payload: AqtPayload {
+                circuits: vec![aqt_instruction_circuit],
+            },
+            label: "qoqo_aqt_backend".to_string(),
+        };
+        // Url to post quantum circuit to AQT simulator
+        let post_quantum_circuit_url = format!(
+            "{}submit/qoqo-integration/simulator_noise",
+            self.device.remote_host()
+        );
         let resp = client
-            .put(self.device.remote_host())
-            .header("Ocp-Apim-Subscription-Key", self.access_token.clone())
-            .form(&data)
+            .post(post_quantum_circuit_url)
+            .header(ACCEPT, HeaderValue::from_static("application/json"))
+            .bearer_auth(self.access_token.clone())
+            .json(&data)
             .send()
             .map_err(|e| RoqoqoBackendError::NetworkError {
                 msg: format!("{:?}", e),
@@ -210,29 +278,27 @@ impl EvaluatingBackend for Backend {
                 ),
             });
         }
-        let response: AqtRunResponse =
+        let run_response: AqtRunResponse =
             resp.json::<AqtRunResponse>()
                 .map_err(|e| RoqoqoBackendError::NetworkError {
                     msg: format!("{:?}", e),
                 })?;
-
-        let querry = AqtResultQuerry {
-            id: response.id,
-            access_token: self.access_token.clone(),
-        };
+        let job_id: String = run_response.job.job_id;
+        // Url to obtain result of simulation from AQT simulator
+        let get_result_url = format!("{}result/{}", self.device.remote_host(), job_id);
         let mut loop_prevention = 0;
         let mut finished: bool = false;
         while loop_prevention < 100 {
             loop_prevention += 1;
-            let querry_resp = client
-                .put(self.device.remote_host())
-                .header("Ocp-Apim-Subscription-Key", self.access_token.clone())
-                .form(&querry)
+            let client_resp = client
+                .get(&get_result_url)
+                .header(ACCEPT, HeaderValue::from_static("application/json"))
+                .bearer_auth(self.access_token.clone())
                 .send()
                 .map_err(|e| RoqoqoBackendError::NetworkError {
                     msg: format!("{:?}", e),
                 })?;
-            let status_code = querry_resp.status();
+            let status_code = client_resp.status();
             if status_code != reqwest::StatusCode::OK {
                 return Err(RoqoqoBackendError::NetworkError {
                     msg: format!(
@@ -241,17 +307,31 @@ impl EvaluatingBackend for Backend {
                     ),
                 });
             }
-            let querry_response: AqtResultQuerryResponse = querry_resp
-                .json::<AqtResultQuerryResponse>()
-                .map_err(|e| RoqoqoBackendError::NetworkError {
-                    msg: format!("second {:?}", e),
+            let run_response: AqtRunResponse =
+                client_resp.json::<AqtRunResponse>().map_err(|e| {
+                    RoqoqoBackendError::NetworkError {
+                        msg: format!("second {:?}", e),
+                    }
                 })?;
+            let querry_response = run_response.response;
             if querry_response.status.as_str() == "finished" {
                 finished = true;
-                for measured in querry_response.samples.iter() {
+                let measured_results =
+                    querry_response
+                        .result
+                        .get(&0)
+                        .ok_or(RoqoqoBackendError::GenericError {
+                        msg:
+                            "Failed to get measurement due to incorrect retrieval from AQT response"
+                                .to_string(),
+                    })?;
+                for measured in measured_results[0].iter() {
                     let binary_representation: Vec<bool> = (0..self.device.number_qubits())
                         .map(|x| {
-                            measured.div_euclid(2_usize.pow(x as u32)).rem_euclid(2) == 1_usize
+                            (*measured as usize)
+                                .div_euclid(2_usize.pow(x as u32))
+                                .rem_euclid(2)
+                                == 1_usize
                         })
                         .collect();
                     if let Some(reg) = bit_registers.get_mut(&readout) {
@@ -262,7 +342,10 @@ impl EvaluatingBackend for Backend {
             }
             if querry_response.status.as_str() == "error" {
                 return Err(RoqoqoBackendError::NetworkError {
-                    msg: "AQT network backend reported error".to_string(),
+                    msg: format!(
+                        "AQT network backend reported error: {}",
+                        querry_response.message
+                    ),
                 });
             }
             thread::sleep(time::Duration::from_secs(50));
