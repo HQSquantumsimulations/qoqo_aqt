@@ -16,7 +16,7 @@ import numpy as np
 import numpy.testing as npt
 from qoqo import operations as ops
 from qoqo import Circuit
-from qoqo_aqt.devices import SimulatorDevice
+from qoqo_aqt.devices import AqtDevice
 from qoqo_aqt import Backend
 from typing import List
 
@@ -47,7 +47,7 @@ def test_mocked_backend(measurement):
     circuit += ops.PauliX(qubit=0)
     circuit += measurement[0]
 
-    device = SimulatorDevice(number_qubits=2)
+    device = AqtDevice(number_qubits=2)
     _backend = Backend(device, "")
 
     # results = backend.run_circuit(circuit=circuit)[measurement[2]]['ro'][0]
