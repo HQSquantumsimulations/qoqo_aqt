@@ -4,6 +4,11 @@ This changelog track changes to the qoqo aqt project starting at version 0.3.0
 
 ## Not released
 
+## 0.8.0
+
+* Updated pkg to account for new AQT API
+* Added mock testing in roqoqo_aqt
+
 ## 0.7.0
 
 * Updated to pyo3 0.21
