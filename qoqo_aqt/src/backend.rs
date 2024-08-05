@@ -31,7 +31,7 @@ use std::collections::HashMap;
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct BackendWrapper {
     /// Internal storage of [roqoqo_aqt::Backend]
-    pub internal: Backend,
+    pub internal: Backend<AqtDevice>,
 }
 
 /// Type of registers returned from a run of a Circuit.
@@ -360,7 +360,7 @@ impl BackendWrapper {
 /// Convert generic python object to [roqoqo_aqt::Backend].
 ///
 /// Fallible conversion of generic python object to [roqoqo_aqt::Backend].
-pub fn convert_into_backend(input: &Bound<PyAny>) -> Result<Backend, QoqoBackendError> {
+pub fn convert_into_backend(input: &Bound<PyAny>) -> Result<Backend<AqtDevice>, QoqoBackendError> {
     if let Ok(try_downcast) = input.extract::<BackendWrapper>() {
         Ok(try_downcast.internal)
     } else {

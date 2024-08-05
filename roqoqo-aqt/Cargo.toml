@@ -36,5 +36,5 @@ test-case = "3.0"
 
 [dev-dependencies]
 roqoqo-test = { version = "~1.14" }
-httpmock = { version = "~0.7", features = ["remote"]}
+wiremock = { version = "~0.6"}
 tokio = { version = "1", features = ["full"] }

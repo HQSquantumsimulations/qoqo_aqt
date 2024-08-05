@@ -26,4 +26,6 @@
 mod interface;
 pub use interface::{call_circuit, call_operation, AqtInstruction};
 mod backend;
-pub use backend::{AqtApi, AqtDevice, Backend};
+pub use backend::Backend;
+pub mod devices;
+pub use devices::AqtApi;

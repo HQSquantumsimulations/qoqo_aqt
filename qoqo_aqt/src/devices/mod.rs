@@ -14,11 +14,8 @@
 //!
 //! Quantum programs are represented by linear sequences of quantum operations
 
-mod simulator_device;
-pub use simulator_device::*;
-
-mod noisy_simulator_device;
-pub use noisy_simulator_device::*;
+mod aqt_device;
+pub use aqt_device::*;
 
 use pyo3::prelude::*;
 
@@ -35,7 +32,6 @@ use pyo3::prelude::*;
 // ///
 #[pymodule]
 pub fn aqt_devices(_py: Python, m: &Bound<PyModule>) -> PyResult<()> {
-    m.add_class::<SimulatorDeviceWrapper>()?;
-    m.add_class::<NoisySimulatorDeviceWrapper>()?;
+    m.add_class::<AqtDeviceWrapper>()?;
     Ok(())
 }

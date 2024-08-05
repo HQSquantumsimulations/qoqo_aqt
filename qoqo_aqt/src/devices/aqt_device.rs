@@ -14,20 +14,20 @@ use pyo3::exceptions::{PyTypeError, PyValueError};
 use pyo3::prelude::*;
 use pyo3::types::PyByteArray;
 use qoqo::QoqoBackendError;
-use roqoqo_aqt::devices::{AqtDevice, SimulatorDevice};
+use roqoqo_aqt::{devices::AqtDevice, AqtApi};
 
 /// AQT quantum simulator device
 ///
 /// Provides endpoint that receives instructions that are simulated and returns measurement results.
-#[pyclass(name = "SimulatorDevice", module = "qoqo_aqt")]
+#[pyclass(name = "AqtDevice", module = "qoqo_aqt")]
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct SimulatorDeviceWrapper {
-    /// Internal storage of [roqoqo_aqt::SimulatorDevice]
-    pub internal: SimulatorDevice,
+pub struct AqtDeviceWrapper {
+    /// Internal storage of [roqoqo_aqt::AqtDevice]
+    pub internal: AqtDevice,
 }
 
 #[pymethods]
-impl SimulatorDeviceWrapper {
+impl AqtDeviceWrapper {
     /// Create new simulator device.
     ///
     /// Args:
@@ -35,95 +35,93 @@ impl SimulatorDeviceWrapper {
     #[new]
     pub fn new(number_qubits: usize) -> Self {
         Self {
-            internal: SimulatorDevice::new(number_qubits),
+            internal: AqtDevice::new(number_qubits),
         }
     }
 
-    /// Return a copy of the SimulatorDevice (copy here produces a deepcopy).
+    /// Return a copy of the AqtDevice (copy here produces a deepcopy).
     ///
     /// Returns:
-    ///     SimulatorDevice: A deep copy of self.
-    pub fn __copy__(&self) -> SimulatorDeviceWrapper {
+    ///     AqtDevice: A deep copy of self.
+    pub fn __copy__(&self) -> AqtDeviceWrapper {
         self.clone()
     }
 
-    /// Return a deep copy of the SimulatorDevice.
+    /// Return a deep copy of the AqtDevice.
     ///
     /// Returns:
-    ///     SimulatorDevice: A deep copy of self.
-    pub fn __deepcopy__(&self, _memodict: Py<PyAny>) -> SimulatorDeviceWrapper {
+    ///     AqtDevice: A deep copy of self.
+    pub fn __deepcopy__(&self, _memodict: Py<PyAny>) -> AqtDeviceWrapper {
         self.clone()
     }
 
-    /// Return the bincode representation of the SimulatorDevice using the [bincode] crate.
+    /// Return the bincode representation of the AqtDevice using the [bincode] crate.
     ///
     /// Returns:
-    ///     ByteArray: The serialized SimulatorDevice (in [bincode] form).
+    ///     ByteArray: The serialized AqtDevice (in [bincode] form).
     ///
     /// Raises:
-    ///     ValueError: Cannot serialize SimulatorDevice to bytes.
+    ///     ValueError: Cannot serialize AqtDevice to bytes.
     pub fn to_bincode(&self) -> PyResult<Py<PyByteArray>> {
         let serialized = serialize(&self.internal)
-            .map_err(|_| PyValueError::new_err("Cannot serialize SimulatorDevice to bytes"))?;
+            .map_err(|_| PyValueError::new_err("Cannot serialize AqtDevice to bytes"))?;
         let b: Py<PyByteArray> = Python::with_gil(|py| -> Py<PyByteArray> {
             PyByteArray::new_bound(py, &serialized[..]).into()
         });
         Ok(b)
     }
 
-    /// Convert the bincode representation of the SimulatorDevice to a SimulatorDevice using the [bincode] crate.
+    /// Convert the bincode representation of the AqtDevice to a AqtDevice using the [bincode] crate.
     ///
     /// Args:
-    ///     input (ByteArray): The serialized SimulatorDevice (in [bincode] form).
+    ///     input (ByteArray): The serialized AqtDevice (in [bincode] form).
     ///
     /// Returns:
-    ///     SimulatorDevice: The deserialized SimulatorDevice.
+    ///     AqtDevice: The deserialized AqtDevice.
     ///
     /// Raises:
     ///     TypeError: Input cannot be converted to byte array.
-    ///     ValueError: Input cannot be deserialized to SimulatorDevice.
+    ///     ValueError: Input cannot be deserialized to AqtDevice.
     #[staticmethod]
-    pub fn from_bincode(input: &Bound<PyAny>) -> PyResult<SimulatorDeviceWrapper> {
+    pub fn from_bincode(input: &Bound<PyAny>) -> PyResult<AqtDeviceWrapper> {
         let bytes = input
             .extract::<Vec<u8>>()
             .map_err(|_| PyTypeError::new_err("Input cannot be converted to byte array"))?;
 
-        Ok(SimulatorDeviceWrapper {
-            internal: deserialize(&bytes[..]).map_err(|_| {
-                PyValueError::new_err("Input cannot be deserialized to SimulatorDevice")
-            })?,
+        Ok(AqtDeviceWrapper {
+            internal: deserialize(&bytes[..])
+                .map_err(|_| PyValueError::new_err("Input cannot be deserialized to AqtDevice"))?,
         })
     }
 
-    /// Return the json representation of the SimulatorDevice.
+    /// Return the json representation of the AqtDevice.
     ///
     /// Returns:
-    ///     str: The serialized form of SimulatorDevice.
+    ///     str: The serialized form of AqtDevice.
     ///
     /// Raises:
-    ///     ValueError: Cannot serialize SimulatorDevice to json.
+    ///     ValueError: Cannot serialize AqtDevice to json.
     fn to_json(&self) -> PyResult<String> {
         let serialized = serde_json::to_string(&self.internal)
-            .map_err(|_| PyValueError::new_err("Cannot serialize SimulatorDevice to json"))?;
+            .map_err(|_| PyValueError::new_err("Cannot serialize AqtDevice to json"))?;
         Ok(serialized)
     }
 
-    /// Convert the json representation of a SimulatorDevice to a SimulatorDevice.
+    /// Convert the json representation of a AqtDevice to a AqtDevice.
     ///
     /// Args:
-    ///     input (str): The serialized SimulatorDevice in json form.
+    ///     input (str): The serialized AqtDevice in json form.
     ///
     /// Returns:
-    ///     SimulatorDevice: The deserialized SimulatorDevice.
+    ///     AqtDevice: The deserialized AqtDevice.
     ///
     /// Raises:
-    ///     ValueError: Input cannot be deserialized to SimulatorDevice.
+    ///     ValueError: Input cannot be deserialized to AqtDevice.
     #[staticmethod]
-    fn from_json(input: &str) -> PyResult<SimulatorDeviceWrapper> {
-        Ok(SimulatorDeviceWrapper {
-            internal: serde_json::from_str(input).map_err(|_| {
-                PyValueError::new_err("Input cannot be deserialized to SimulatorDevice")
-            })?,
+    fn from_json(input: &str) -> PyResult<AqtDeviceWrapper> {
+        Ok(AqtDeviceWrapper {
+            internal: serde_json::from_str(input)
+                .map_err(|_| PyValueError::new_err("Input cannot be deserialized to AqtDevice"))?,
         })
     }
 
@@ -145,34 +143,27 @@ impl SimulatorDeviceWrapper {
         self.internal.remote_host().to_string()
     }
 
-    /// Return the bincode representation of the Enum variant of the Device.
-    ///
-    /// Only used for internal interfacing.
+    /// Return True or False to indicate whether the remote host URL is https.
     ///
     /// Returns:
-    ///     ByteArray: The serialized AqtDevice (in [bincode] form).
+    ///     boolean: Whether remote host URL is https or not.
     ///
-    /// Raises:
-    ///     ValueError: Cannot serialize Device to bytes.
-    pub fn _enum_to_bincode(&self) -> PyResult<Py<PyByteArray>> {
-        let aqt_enum: AqtDevice = (&self.internal).into();
-        let serialized = serialize(&aqt_enum)
-            .map_err(|_| PyValueError::new_err("Cannot serialize SimulatorDevice to bytes"))?;
-        let b: Py<PyByteArray> = Python::with_gil(|py| -> Py<PyByteArray> {
-            PyByteArray::new_bound(py, &serialized[..]).into()
-        });
-        Ok(b)
+    pub fn is_https(&self) -> bool {
+        self.internal.is_https()
     }
 }
 
 /// Convert generic python object to [roqoqo_aqt::AqtDevice].
 ///
-/// Fallible conversion of generic python object to [roqoqo::SimulatorDevice].
+/// Fallible conversion of generic python object to [roqoqo::AqtDevice].
 pub fn convert_into_device(input: &Bound<PyAny>) -> Result<AqtDevice, QoqoBackendError> {
+    if let Ok(try_downcast) = input.extract::<AqtDeviceWrapper>() {
+        return Ok(try_downcast.internal);
+    }
     // Everything that follows tries to extract the circuit when two separately
     // compiled python packages are involved
     let get_bytes = input
-        .call_method0("_enum_to_bincode")
+        .call_method0("to_bincode")
         .map_err(|_| QoqoBackendError::CannotExtractObject)?;
     let bytes = get_bytes
         .extract::<Vec<u8>>()

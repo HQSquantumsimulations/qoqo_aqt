@@ -83,7 +83,8 @@ pub fn call_circuit(circuit: &Circuit) -> Result<Vec<AqtInstruction>, RoqoqoBack
     Ok(circuit_vec)
 }
 
-/// Converts a [roqoqo::operations::Operation] into an instruction for AQT Hardware or AQT Simulators
+/// Converts a [roqoqo::operations::Operation] into an instruction for AQT Hardware or AQT Simulators.
+/// *Note* - Any measurment operation, regardless of the specific qubits defined, will always measure all the qubits.
 ///
 /// # Arguments
 ///
@@ -123,14 +124,16 @@ pub fn call_operation(operation: &Operation) -> Result<Option<AqtInstruction>, R
             theta: 1.0,
             qubit: *op.qubit() as u32,
         })),
+        // Variable MSXX is different in qoqo and aqt
         Operation::VariableMSXX(op) => Ok(Some(AqtInstruction::RXX {
             qubits: vec![*op.control() as u32, *op.target() as u32],
-            theta: *op.theta().float()? / std::f64::consts::PI,
+            theta: *op.theta().float()? / 2.0,
         })),
         Operation::MolmerSorensenXX(op) => Ok(Some(AqtInstruction::RXX {
             qubits: vec![*op.control() as u32, *op.target() as u32],
             theta: 0.5,
         })),
+        // AQT device
         Operation::PragmaRepeatedMeasurement(_op) => Ok(Some(AqtInstruction::MEASURE)),
         Operation::MeasureQubit(_op) => Ok(Some(AqtInstruction::MEASURE)),
         _ => {

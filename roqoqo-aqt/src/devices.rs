@@ -15,114 +15,43 @@
 //! Provides the devices that are used to execute quantum programs with the AQT backend.
 //! AQT devices can be physical hardware or simulators.
 
-// /// Collection of AQT quantum devices
-// ///
-// #[derive(Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize)]
-// pub enum AqtDevice {
-//     /// AQT online simulator
-//     SimulatorDevice(SimulatorDevice),
-//     /// AQT online simulator with noise model
-//     NoisySimulatorDevice(NoisySimulatorDevice),
-// }
+/// AQT noisy quantum simulator device
+///
+/// Provides endpoint that receives instructions that are simulated and returns measurement results.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct AqtDevice {
+    /// Number of qubits supported by the device
+    pub number_qubits: usize,
+}
 
-// impl AqtDevice {
-//     /// Returns the number of qubits in the device.
-//     pub fn number_qubits(&self) -> usize {
-//         match self {
-//             AqtDevice::SimulatorDevice(x) => x.number_qubits(),
-//             AqtDevice::NoisySimulatorDevice(x) => x.number_qubits(),
-//         }
-//     }
+impl AqtDevice {
+    /// Create a new AQT device for the backend
+    pub fn new(number_qubits: usize) -> Self {
+        Self { number_qubits }
+    }
+}
 
-//     /// Returns the remote_host url endpoint of the device
-//     pub fn remote_host(&self) -> &str {
-//         match self {
-//             AqtDevice::SimulatorDevice(x) => x.remote_host(),
-//             AqtDevice::NoisySimulatorDevice(x) => x.remote_host(),
-//         }
-//     }
-// }
+impl AqtApi for AqtDevice {
+    /// Returns REST API endpoint to make calls to the AQT device
+    fn remote_host(&self) -> String {
+        "https://arnica.aqt.eu/api/v1/".to_string()
+    }
+    /// Return number of qubits available
+    fn number_qubits(&self) -> usize {
+        self.number_qubits
+    }
+    /// Returns whether the internal client sends request to an https server
+    fn is_https(&self) -> bool {
+        true
+    }
+}
 
-// impl From<&SimulatorDevice> for AqtDevice {
-//     fn from(input: &SimulatorDevice) -> Self {
-//         Self::SimulatorDevice(input.clone())
-//     }
-// }
-
-// impl From<SimulatorDevice> for AqtDevice {
-//     fn from(input: SimulatorDevice) -> Self {
-//         Self::SimulatorDevice(input)
-//     }
-// }
-
-// /// AQT quantum simulator device
-// ///
-// /// Provides endpoint that receives instructions that are simulated and returns measurement results.
-// #[derive(Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize)]
-// pub struct SimulatorDevice {
-//     /// Number of qubits supported by the device
-//     pub number_qubits: usize,
-// }
-
-// impl SimulatorDevice {
-//     /// Create new simulator device
-//     ///
-//     /// # Arguments
-//     ///
-//     /// `number_qubits` - Number of qubits that should be simulated
-//     pub fn new(number_qubits: usize) -> Self {
-//         Self { number_qubits }
-//     }
-
-//     /// Returns the number of qubits in the device.
-//     pub fn number_qubits(&self) -> usize {
-//         self.number_qubits
-//     }
-
-//     /// Returns the remote_host url endpoint of the device
-//     pub fn remote_host(&self) -> &str {
-//         "https://gateway.aqt.eu/marmot/sim/"
-//     }
-// }
-
-// /// AQT noisy quantum simulator device
-// ///
-// /// Provides endpoint that receives instructions that are simulated and returns measurement results.
-// #[derive(Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize)]
-// pub struct NoisySimulatorDevice {
-//     /// Number of qubits supported by the device
-//     pub number_qubits: usize,
-// }
-
-// impl NoisySimulatorDevice {
-//     /// Create new simulator device
-//     ///
-//     /// # Arguments
-//     ///
-//     /// `number_qubits` - Number of qubits that should be simulated
-//     pub fn new(number_qubits: usize) -> Self {
-//         Self { number_qubits }
-//     }
-
-//     /// Returns the number of qubits in the device.
-//     pub fn number_qubits(&self) -> usize {
-//         self.number_qubits
-//     }
-
-//     /// Returns the remote_host url endpoint of the device
-//     pub fn remote_host(&self) -> &str {
-//         "https://gateway.aqt.eu/marmot/sim/noise-model-1"
-//     }
-// }
-
-// impl From<&NoisySimulatorDevice> for AqtDevice {
-//     fn from(input: &NoisySimulatorDevice) -> Self {
-//         Self::NoisySimulatorDevice(input.clone())
-//     }
-// }
-
-// impl From<NoisySimulatorDevice> for AqtDevice {
-//     fn from(input: NoisySimulatorDevice) -> Self {
-//         Self::NoisySimulatorDevice(input)
-//     }
-// }
+/// Defines the AQT backend on which to run quantum simulations
+pub trait AqtApi {
+    /// Returns REST API endpoint to make calls to the AQT device
+    fn remote_host(&self) -> String;
+    /// Return number of qubits available
+    fn number_qubits(&self) -> usize;
+    /// Returns whether the internal client sends request to an https server
+    fn is_https(&self) -> bool;
+}
