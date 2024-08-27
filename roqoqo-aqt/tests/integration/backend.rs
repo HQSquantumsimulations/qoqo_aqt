@@ -127,13 +127,17 @@ async fn api_status_test() {
         fn is_https(&self) -> bool {
             false
         }
+
+        fn id(&self) -> String {
+            "dummy".to_string()
+        }
     }
 
     let server = MockServer::start().await;
     let uri = server.uri();
     // matching expected post body
     Mock::given(method("POST"))
-        .and(path("/mock/submit/qoqo-integration/simulator_noise"))
+        .and(path("/mock/submit/qoqo-integration/dummy"))
         .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_run_response_empty))
         .mount(&server)
         .await;
@@ -164,7 +168,7 @@ async fn api_status_test() {
     server.reset().await;
 
     Mock::given(method("POST"))
-        .and(path("/mock/submit/qoqo-integration/simulator_noise"))
+        .and(path("/mock/submit/qoqo-integration/dummy"))
         .respond_with(ResponseTemplate::new(404))
         .mount(&server)
         .await;
@@ -180,7 +184,8 @@ async fn api_status_test() {
     assert!(res.is_err());
     let e = res.err().unwrap();
     let expected_error = RoqoqoBackendError::NetworkError {
-        msg: "Request to server failed with HTTP status code 404".to_string(),
+        msg: "Failed to post job to server. Request to server failed with HTTP status code 404"
+            .to_string(),
     };
     assert_eq!(e, expected_error);
 
@@ -219,7 +224,8 @@ async fn api_status_test() {
     assert!(res.is_err());
     let e = res.err().unwrap();
     let expected_error = RoqoqoBackendError::NetworkError {
-        msg: "Request to server failed with HTTP status code 404".to_string(),
+        msg: "Failed to get result from server. Request to server failed with HTTP status code 404"
+            .to_string(),
     };
     assert_eq!(e, expected_error);
 
@@ -339,13 +345,17 @@ async fn api_request_body_test() {
         fn is_https(&self) -> bool {
             false
         }
+
+        fn id(&self) -> String {
+            "dummy".to_string()
+        }
     }
 
     let server = MockServer::start().await;
     let uri = server.uri();
     // matching expected post body
     Mock::given(method("POST"))
-        .and(path("/mock/submit/qoqo-integration/simulator_noise"))
+        .and(path("/mock/submit/qoqo-integration/dummy"))
         .and(body_json(&aqt_expect_post_body_small))
         .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_run_response_empty))
         .mount(&server)
@@ -381,7 +391,7 @@ async fn api_request_body_test() {
     server.reset().await;
 
     Mock::given(method("POST"))
-        .and(path("/mock/submit/qoqo-integration/simulator_noise"))
+        .and(path("/mock/submit/qoqo-integration/dummy"))
         .and(body_json(&aqt_expect_post_body))
         .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_run_response_empty))
         .mount(&server)
@@ -418,9 +428,118 @@ async fn api_request_body_test() {
     server.reset().await;
 }
 
+#[tokio::test]
+async fn api_resources_error_mock_test() {
+    let aqt_resouce_details_offline = json!({
+        "id": "dummy",
+        "name": "Noisy Simulator",
+        "type": "simulator",
+        "status": "offline",
+        "available_qubits": 12
+    });
+    let aqt_resouce_details_low_qubits = json!({
+        "id": "dummy",
+        "name": "Noisy Simulator",
+        "type": "simulator",
+        "status": "online",
+        "available_qubits": 2
+    });
+
+    #[derive(Clone)]
+    struct MockAqtDevice {
+        pub number_qubits: usize,
+        pub mock_host: String,
+    }
+
+    impl AqtApi for MockAqtDevice {
+        fn remote_host(&self) -> String {
+            self.mock_host.to_string()
+        }
+
+        fn number_qubits(&self) -> usize {
+            self.number_qubits
+        }
+
+        fn is_https(&self) -> bool {
+            false
+        }
+
+        fn id(&self) -> String {
+            "dummy".to_string()
+        }
+    }
+
+    let server = MockServer::start().await;
+    let uri = server.uri();
+
+    Mock::given(method("GET"))
+        .and(path("/mock/resources/dummy"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_resouce_details_offline))
+        .mount(&server)
+        .await;
+
+    let mock_device = MockAqtDevice {
+        number_qubits: 2,
+        mock_host: format!("{}/mock/", uri),
+    };
+
+    let mut circuit = Circuit::new();
+    circuit += DefinitionBit::new("ro".to_string(), 1, true);
+    circuit += PauliX::new(0);
+    circuit += PragmaRepeatedMeasurement::new("ro".to_string(), 5, None);
+    let backend = Backend::new(mock_device, Some("DummyAccessToken".to_string())).unwrap();
+    let res = spawn_blocking(move || backend.run_circuit(&circuit))
+        .await
+        .unwrap();
+    assert!(res.is_err());
+    let e = res.err().unwrap();
+    let expected_error = RoqoqoBackendError::NetworkError {
+        msg: "AQT resource is currently ofline".to_string(),
+    };
+    assert_eq!(e, expected_error);
+
+    server.verify().await;
+    server.reset().await;
+
+    Mock::given(method("GET"))
+        .and(path("/mock/resources/dummy"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_resouce_details_low_qubits))
+        .mount(&server)
+        .await;
+
+    let mock_device = MockAqtDevice {
+        number_qubits: 10,
+        mock_host: format!("{}/mock/", uri),
+    };
+
+    let mut circuit = Circuit::new();
+    circuit += DefinitionBit::new("ro".to_string(), 1, true);
+    circuit += PauliX::new(0);
+    circuit += PragmaRepeatedMeasurement::new("ro".to_string(), 5, None);
+    let backend = Backend::new(mock_device, Some("DummyAccessToken".to_string())).unwrap();
+    let res = spawn_blocking(move || backend.run_circuit(&circuit))
+        .await
+        .unwrap();
+    assert!(res.is_err());
+    let e = res.err().unwrap();
+    let expected_error = RoqoqoBackendError::GenericError {
+        msg: "Insuffient qubits on backend device. Maximum available qubits: 2.".to_string(),
+    };
+    assert_eq!(e, expected_error);
+
+    server.verify().await;
+    server.reset().await;
+}
 // Test backend run function with a mock device
 #[tokio::test]
 async fn api_backend_mock_test() {
+    let aqt_resouce_details_online = json!({
+      "id": "dummy",
+      "name": "Noisy Simulator",
+      "type": "simulator",
+      "status": "online",
+      "available_qubits": 12
+    });
     let aqt_expect_post_body_small = json!({
         "job_type": "quantum_circuit",
         "label": "qoqo_aqt_backend",
@@ -527,13 +646,23 @@ async fn api_backend_mock_test() {
         fn is_https(&self) -> bool {
             false
         }
+
+        fn id(&self) -> String {
+            "dummy".to_string()
+        }
     }
 
     let server = MockServer::start().await;
     let uri = server.uri();
-    // matching expected post body
+
+    Mock::given(method("GET"))
+        .and(path("/mock/resources/dummy"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_resouce_details_online))
+        .mount(&server)
+        .await;
+
     Mock::given(method("POST"))
-        .and(path("/mock/submit/qoqo-integration/simulator_noise"))
+        .and(path("/mock/submit/qoqo-integration/dummy"))
         .and(body_json(&aqt_expect_post_body_small))
         .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_run_response_queued))
         .mount(&server)
@@ -570,8 +699,14 @@ async fn api_backend_mock_test() {
     server.verify().await;
     server.reset().await;
 
+    Mock::given(method("GET"))
+        .and(path("/mock/resources/dummy"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_resouce_details_online))
+        .mount(&server)
+        .await;
+
     Mock::given(method("POST"))
-        .and(path("/mock/submit/qoqo-integration/simulator_noise"))
+        .and(path("/mock/submit/qoqo-integration/dummy"))
         .and(body_json(&aqt_expect_post_body_small))
         .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_run_response_queued))
         .mount(&server)
@@ -606,8 +741,14 @@ async fn api_backend_mock_test() {
     server.verify().await;
     server.reset().await;
 
+    Mock::given(method("GET"))
+        .and(path("/mock/resources/dummy"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_resouce_details_online))
+        .mount(&server)
+        .await;
+
     Mock::given(method("POST"))
-        .and(path("/mock/submit/qoqo-integration/simulator_noise"))
+        .and(path("/mock/submit/qoqo-integration/dummy"))
         .and(body_json(&aqt_expect_post_body_small))
         .respond_with(ResponseTemplate::new(200).set_body_json(&aqt_run_response_queued))
         .mount(&server)
@@ -661,6 +802,24 @@ fn api_backend_test_small() {
         "ro".to_string(),
         vec![vec![true], vec![true], vec![true], vec![true], vec![true]],
     );
+    assert_eq!(bit_registers, expected_br);
+}
+
+// Test backend run on AQT simulator with small circuit
+#[test]
+fn api_backend_test_small_two() {
+    let device = AqtDevice { number_qubits: 1 };
+    let backend = Backend::new(device, None).unwrap();
+
+    let mut circuit = Circuit::new();
+    circuit += DefinitionBit::new("ro".to_string(), 1, true);
+    circuit += PauliX::new(0);
+    circuit += MeasureQubit::new(0, "ro".to_string(), 0);
+    let (bit_registers, _float_registers, _complex_registers) =
+        backend.run_circuit(&circuit).unwrap();
+
+    let mut expected_br = HashMap::<String, Vec<BitRegister>>::new();
+    expected_br.insert("ro".to_string(), vec![vec![true]]);
     assert_eq!(bit_registers, expected_br);
 }
 

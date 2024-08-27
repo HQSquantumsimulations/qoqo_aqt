@@ -10,14 +10,14 @@
 // express or implied. See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! AQT Devices
+//! AQT Device
 //!
-//! Provides the devices that are used to execute quantum programs with the AQT backend.
-//! AQT devices can be physical hardware or simulators.
+//! Provides the device used to execute quantum programs with the AQT backend.
 
-/// AQT noisy quantum simulator device
+/// AQT device
 ///
-/// Provides endpoint that receives instructions that are simulated and returns measurement results.
+/// Consists of information about the device such as the id, the number of qubits, and the endpoint that receives instructions that
+/// are simulated and returns measurement results.
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct AqtDevice {
     /// Number of qubits supported by the device
@@ -44,6 +44,10 @@ impl AqtApi for AqtDevice {
     fn is_https(&self) -> bool {
         true
     }
+    /// Returns the id of the device
+    fn id(&self) -> String {
+        "simulator_noise".to_string()
+    }
 }
 
 /// Defines the AQT backend on which to run quantum simulations
@@ -54,4 +58,6 @@ pub trait AqtApi {
     fn number_qubits(&self) -> usize;
     /// Returns whether the internal client sends request to an https server
     fn is_https(&self) -> bool;
+    /// Returns the id of the device
+    fn id(&self) -> String;
 }

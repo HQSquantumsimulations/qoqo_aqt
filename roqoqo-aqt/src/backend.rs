@@ -120,6 +120,20 @@ struct AqtQuerryResponse {
     result: HashMap<u32, Vec<Vec<u32>>>,
 }
 
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default)]
+pub struct AqtResourceDetails {
+    #[serde(default)]
+    id: String,
+    #[serde(default)]
+    name: String,
+    #[serde(default)]
+    r#type: String,
+    #[serde(default)]
+    status: String,
+    #[serde(default)]
+    available_qubits: u32,
+}
+
 impl<T: AqtApi> Backend<T> {
     /// Creates a new AQT backend.
     ///
@@ -210,6 +224,7 @@ impl<T: AqtApi> Backend<T> {
                     }
                 }
                 Operation::MeasureQubit(o) => {
+                    number_measurements = 1;
                     readout.clone_from(o.readout());
                     if let Some(x) = call_operation(op)? {
                         instruction_vec.push(x)
@@ -265,7 +280,40 @@ impl<T: AqtApi> Backend<T> {
             readout,
         ))
     }
-
+    /// Sends get request to obtain details of the resource for a given resource id
+    pub fn get_resource_details(
+        &self,
+        client: &blocking::Client,
+    ) -> Result<AqtResourceDetails, RoqoqoBackendError> {
+        let get_resource_details_url = format!(
+            "{}resources/{}",
+            self.device.remote_host(),
+            self.device.id()
+        );
+        let client_resp = client
+            .get(get_resource_details_url)
+            .header(ACCEPT, HeaderValue::from_static("application/json"))
+            .bearer_auth(&self.access_token)
+            .send()
+            .map_err(|e| RoqoqoBackendError::NetworkError {
+                msg: format!("{:?}", e),
+            })?;
+        let status_code = client_resp.status();
+        if status_code != reqwest::StatusCode::OK {
+            return Err(RoqoqoBackendError::NetworkError {
+                msg: format!(
+                    "Failed to get resource details. Request to server failed with HTTP status code {:?}",
+                    status_code
+                ),
+            });
+        };
+        let resource_response: AqtResourceDetails = client_resp
+            .json::<AqtResourceDetails>()
+            .map_err(|e| RoqoqoBackendError::NetworkError {
+                msg: format!("{:?}", e),
+            })?;
+        Ok(resource_response)
+    }
     /// Sends a post request to the AQT device server with `AqtRunData` containing job information and quantum circuits
     pub fn post_job(
         &self,
@@ -274,8 +322,9 @@ impl<T: AqtApi> Backend<T> {
     ) -> Result<AqtRunResponse, RoqoqoBackendError> {
         // Url to post quantum circuit to AQT simulator
         let post_quantum_circuit_url = format!(
-            "{}submit/qoqo-integration/simulator_noise",
-            self.device.remote_host()
+            "{}submit/qoqo-integration/{}",
+            self.device.remote_host(),
+            self.device.id()
         );
         let resp = client
             .post(post_quantum_circuit_url)
@@ -290,7 +339,7 @@ impl<T: AqtApi> Backend<T> {
         if status_code != reqwest::StatusCode::OK {
             return Err(RoqoqoBackendError::NetworkError {
                 msg: format!(
-                    "Request to server failed with HTTP status code {:?}",
+                    "Failed to post job to server. Request to server failed with HTTP status code {:?}",
                     status_code
                 ),
             });
@@ -323,7 +372,7 @@ impl<T: AqtApi> Backend<T> {
         if status_code != reqwest::StatusCode::OK {
             return Err(RoqoqoBackendError::NetworkError {
                 msg: format!(
-                    "Request to server failed with HTTP status code {:?}",
+                    "Failed to get result from server. Request to server failed with HTTP status code {:?}",
                     status_code
                 ),
             });
@@ -350,7 +399,21 @@ impl<T: AqtApi> EvaluatingBackend for Backend<T> {
             .map_err(|x| RoqoqoBackendError::NetworkError {
                 msg: format!("could not create https client {:?}", x),
             })?;
-
+        // check device resource
+        let aqt_resources_details = self.get_resource_details(&client)?;
+        if aqt_resources_details.status != "online" {
+            return Err(RoqoqoBackendError::NetworkError {
+                msg: "AQT resource is currently ofline".to_string(),
+            });
+        }
+        if aqt_resources_details.available_qubits < self.device.number_qubits() as u32 {
+            return Err(RoqoqoBackendError::GenericError {
+                msg: format!(
+                    "Insuffient qubits on backend device. Maximum available qubits: {}.",
+                    aqt_resources_details.available_qubits
+                ),
+            });
+        }
         // Convert circuit to aqt instructions
         let (aqt_run_data, all_registers, readout) =
             self.convert_circuit_to_aqt_instructions(circuit)?;
