@@ -17,7 +17,7 @@ use roqoqo_aqt::{devices::AqtDevice, AqtApi};
 fn test_aqt_api() {
     let device = AqtDevice::new(2);
     assert_eq!(device.number_qubits(), 2);
-    assert_eq!(device.is_https(), true);
+    assert!(device.is_https());
     assert_eq!(
         device.remote_host(),
         "https://arnica.aqt.eu/api/v1/".to_string()
