@@ -18,7 +18,7 @@ This repository contains two components:
 [![Documentation Status](https://img.shields.io/badge/docs-documentation-green)](https://hqsquantumsimulations.github.io/qoqo_aqt/)
 [![GitHub Workflow Status](https://github.com/HQSquantumsimulations/qoqo_aqt/workflows/ci_tests/badge.svg)](https://github.com/HQSquantumsimulations/qoqo_aqt/actions)
 [![PyPI](https://img.shields.io/pypi/v/qoqo_aqt)](https://pypi.org/project/qoqo_aqt/)
-![PyPI - License](https://img.shields.io/pypi/l/qoqo_aqt)
+![PyPI - License](https://img.shields.io/github/license/HQSquantumsimulations/qoqo_aqt?label=license)
 [![PyPI - Format](https://img.shields.io/pypi/format/qoqo_aqt)](https://pypi.org/project/qoqo_aqt/)
 
 AQT-backend for the qoqo quantum toolkit by [HQS Quantum Simulations](https://quantumsimulations.de).
