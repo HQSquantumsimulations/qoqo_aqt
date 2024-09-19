@@ -23,6 +23,30 @@ use tokio::task::spawn_blocking;
 use wiremock::matchers::{body_json, method, path};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
+#[derive(Clone)]
+struct MockAqtDevice {
+    pub number_qubits: usize,
+    pub mock_host: String,
+}
+
+impl AqtApi for MockAqtDevice {
+    fn remote_host(&self) -> String {
+        self.mock_host.to_string()
+    }
+
+    fn number_qubits(&self) -> usize {
+        self.number_qubits
+    }
+
+    fn is_https(&self) -> bool {
+        false
+    }
+
+    fn id(&self) -> String {
+        "dummy".to_string()
+    }
+}
+
 #[test]
 fn init_backend() {
     if env::var("AQT_ACCESS_TOKEN").is_ok() {
@@ -109,29 +133,6 @@ async fn api_status_test() {
         "status": ""
       }
     });
-    #[derive(Clone)]
-    struct MockAqtDevice {
-        pub number_qubits: usize,
-        pub mock_host: String,
-    }
-
-    impl AqtApi for MockAqtDevice {
-        fn remote_host(&self) -> String {
-            self.mock_host.to_string()
-        }
-
-        fn number_qubits(&self) -> usize {
-            self.number_qubits
-        }
-
-        fn is_https(&self) -> bool {
-            false
-        }
-
-        fn id(&self) -> String {
-            "dummy".to_string()
-        }
-    }
 
     let server = MockServer::start().await;
     let uri = server.uri();
@@ -327,30 +328,6 @@ async fn api_request_body_test() {
     }
       });
 
-    #[derive(Clone)]
-    struct MockAqtDevice {
-        pub number_qubits: usize,
-        pub mock_host: String,
-    }
-
-    impl AqtApi for MockAqtDevice {
-        fn remote_host(&self) -> String {
-            self.mock_host.to_string()
-        }
-
-        fn number_qubits(&self) -> usize {
-            self.number_qubits
-        }
-
-        fn is_https(&self) -> bool {
-            false
-        }
-
-        fn id(&self) -> String {
-            "dummy".to_string()
-        }
-    }
-
     let server = MockServer::start().await;
     let uri = server.uri();
     // matching expected post body
@@ -444,30 +421,6 @@ async fn api_resources_error_mock_test() {
         "status": "online",
         "available_qubits": 2
     });
-
-    #[derive(Clone)]
-    struct MockAqtDevice {
-        pub number_qubits: usize,
-        pub mock_host: String,
-    }
-
-    impl AqtApi for MockAqtDevice {
-        fn remote_host(&self) -> String {
-            self.mock_host.to_string()
-        }
-
-        fn number_qubits(&self) -> usize {
-            self.number_qubits
-        }
-
-        fn is_https(&self) -> bool {
-            false
-        }
-
-        fn id(&self) -> String {
-            "dummy".to_string()
-        }
-    }
 
     let server = MockServer::start().await;
     let uri = server.uri();
@@ -627,30 +580,6 @@ async fn api_backend_mock_test() {
         "status": "cancelled"
       }
     });
-
-    #[derive(Clone)]
-    struct MockAqtDevice {
-        pub number_qubits: usize,
-        pub mock_host: String,
-    }
-
-    impl AqtApi for MockAqtDevice {
-        fn remote_host(&self) -> String {
-            self.mock_host.to_string()
-        }
-
-        fn number_qubits(&self) -> usize {
-            self.number_qubits
-        }
-
-        fn is_https(&self) -> bool {
-            false
-        }
-
-        fn id(&self) -> String {
-            "dummy".to_string()
-        }
-    }
 
     let server = MockServer::start().await;
     let uri = server.uri();

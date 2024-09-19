@@ -39,7 +39,7 @@ target-version = ["py39", "py310", "py311"]
 line-length = 99        # same as black
 target-version = "py39"
 show-fixes = true
-show-source = true
+output-format = "full"
 # activate the following checks
 select = [
     "A",   # builtins
