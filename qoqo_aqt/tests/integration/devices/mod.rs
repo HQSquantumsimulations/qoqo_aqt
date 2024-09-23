@@ -1,4 +1,4 @@
-// Copyright © 2021-2023 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2024 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -24,11 +24,9 @@ use test_case::test_case;
 fn test_creating_device(number_qubits: usize) {
     pyo3::prepare_freethreaded_python();
     Python::with_gil(|py| {
-        let device_type = py.get_type_bound::<devices::SimulatorDeviceWrapper>();
+        let device_type = py.get_type_bound::<devices::AqtDeviceWrapper>();
         let binding = device_type.call1((number_qubits,)).unwrap();
-        let device = binding
-            .downcast::<devices::SimulatorDeviceWrapper>()
-            .unwrap();
+        let device = binding.downcast::<devices::AqtDeviceWrapper>().unwrap();
 
         let get_number_qubits = device
             .call_method0("number_qubits")
@@ -40,36 +38,13 @@ fn test_creating_device(number_qubits: usize) {
             .unwrap()
             .extract::<String>()
             .unwrap();
-        assert_eq!(number_qubits, get_number_qubits);
-        assert_eq!(remote_host.as_str(), "https://gateway.aqt.eu/marmot/sim/");
-    })
-}
-
-#[test_case(1; "1")]
-#[test_case(3; "3")]
-fn test_creating_noisy_device(number_qubits: usize) {
-    pyo3::prepare_freethreaded_python();
-    Python::with_gil(|py| {
-        let device_type = py.get_type_bound::<devices::NoisySimulatorDeviceWrapper>();
-        let binding = device_type.call1((number_qubits,)).unwrap();
-        let device = binding
-            .downcast::<devices::NoisySimulatorDeviceWrapper>()
-            .unwrap();
-
-        let get_number_qubits = device
-            .call_method0("number_qubits")
+        let is_https = device
+            .call_method0("is_https")
             .unwrap()
-            .extract::<usize>()
-            .unwrap();
-        let remote_host = device
-            .call_method0("remote_host")
-            .unwrap()
-            .extract::<String>()
+            .extract::<bool>()
             .unwrap();
         assert_eq!(number_qubits, get_number_qubits);
-        assert_eq!(
-            remote_host.as_str(),
-            "https://gateway.aqt.eu/marmot/sim/noise-model-1"
-        );
+        assert_eq!(remote_host.as_str(), "https://arnica.aqt.eu/api/v1/");
+        assert_eq!(is_https, true);
     })
 }

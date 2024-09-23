@@ -1,4 +1,4 @@
-// Copyright © 2021-2023 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2024 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -31,7 +31,7 @@ use std::collections::HashMap;
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct BackendWrapper {
     /// Internal storage of [roqoqo_aqt::Backend]
-    pub internal: Backend,
+    pub internal: Backend<AqtDevice>,
 }
 
 /// Type of registers returned from a run of a Circuit.
@@ -360,7 +360,7 @@ impl BackendWrapper {
 /// Convert generic python object to [roqoqo_aqt::Backend].
 ///
 /// Fallible conversion of generic python object to [roqoqo_aqt::Backend].
-pub fn convert_into_backend(input: &Bound<PyAny>) -> Result<Backend, QoqoBackendError> {
+pub fn convert_into_backend(input: &Bound<PyAny>) -> Result<Backend<AqtDevice>, QoqoBackendError> {
     if let Ok(try_downcast) = input.extract::<BackendWrapper>() {
         Ok(try_downcast.internal)
     } else {

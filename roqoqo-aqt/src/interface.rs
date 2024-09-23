@@ -1,4 +1,4 @@
-// Copyright © 2021-2023 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2024 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -34,17 +34,34 @@ const ALLOWED_OPERATIONS: &[&str; 12] = &[
 
 /// Representation for AQT backend instructions serialized to Json
 #[derive(PartialEq, Debug, Clone, serde::Serialize, serde::Deserialize)]
-#[serde(untagged)]
+#[serde(tag = "operation")]
 pub enum AqtInstruction {
-    /// Instruction involving a single parameter
-    SingleParameterInstruction((String, f64, Vec<u32>)),
-    /// Instruction involving two parameters
-    TwoParameterInstruction((String, f64, f64, Vec<u32>)),
+    /// Instruction involving RZ gate
+    RZ {
+        /// angle of rotation in PI radians [0 - 2]
+        phi: f64,
+        /// qubit where gate is applied
+        qubit: u32,
+    },
+    /// Instruction involving R gate
+    R {
+        /// polar angle of rotation in PI radians [0 - 1]
+        phi: f64,
+        /// radial angle of rotation in PI radians [0 - 2]
+        theta: f64,
+        /// qubit where gate is applied
+        qubit: u32,
+    },
+    /// Instruction involving MolmerSorensenXX gate
+    RXX {
+        /// qubits where gate is applied
+        qubits: Vec<u32>,
+        /// angle of rotation in PI radians [0 - 2]
+        theta: f64,
+    },
+    /// Instruction to measure all qubits
+    MEASURE,
 }
-
-/// Instruction on AQT device that has a single float parameter
-#[derive(PartialEq, Debug, Clone, serde::Serialize, serde::Deserialize)]
-pub struct SingleParameterInstruction((String, f64, Vec<u32>));
 
 /// Converts all operations in a [roqoqo::Circuit] into instructions for AQT Hardware or AQT Simulators
 ///
@@ -66,7 +83,8 @@ pub fn call_circuit(circuit: &Circuit) -> Result<Vec<AqtInstruction>, RoqoqoBack
     Ok(circuit_vec)
 }
 
-/// Converts a [roqoqo::operations::Operation] into an instruction for AQT Hardware or AQT Simulators
+/// Converts a [roqoqo::operations::Operation] into an instruction for AQT Hardware or AQT Simulators.
+/// *Note* - Any measurment operation, regardless of the specific qubits defined, will always measure all the qubits.
 ///
 /// # Arguments
 ///
@@ -78,46 +96,46 @@ pub fn call_circuit(circuit: &Circuit) -> Result<Vec<AqtInstruction>, RoqoqoBack
 /// `RoqoqoBackendError::OperationNotInBackend` - Error when [roqoqo::operations::Operation] can not be converted
 pub fn call_operation(operation: &Operation) -> Result<Option<AqtInstruction>, RoqoqoBackendError> {
     match operation {
-        Operation::RotateZ(op) => Ok(Some(AqtInstruction::SingleParameterInstruction((
-            "Z".to_string(),
-            *op.theta().float()? / std::f64::consts::PI,
-            vec![*op.qubit() as u32],
-        )))),
-        Operation::RotateX(op) => Ok(Some(AqtInstruction::SingleParameterInstruction((
-            "X".to_string(),
-            *op.theta().float()? / std::f64::consts::PI,
-            vec![*op.qubit() as u32],
-        )))),
-        Operation::RotateY(op) => Ok(Some(AqtInstruction::SingleParameterInstruction((
-            "Y".to_string(),
-            *op.theta().float()? / std::f64::consts::PI,
-            vec![*op.qubit() as u32],
-        )))),
-        Operation::PauliZ(op) => Ok(Some(AqtInstruction::SingleParameterInstruction((
-            "Z".to_string(),
-            1.0,
-            vec![*op.qubit() as u32],
-        )))),
-        Operation::PauliX(op) => Ok(Some(AqtInstruction::SingleParameterInstruction((
-            "X".to_string(),
-            1.0,
-            vec![*op.qubit() as u32],
-        )))),
-        Operation::PauliY(op) => Ok(Some(AqtInstruction::SingleParameterInstruction((
-            "Y".to_string(),
-            1.0,
-            vec![*op.qubit() as u32],
-        )))),
-        Operation::VariableMSXX(op) => Ok(Some(AqtInstruction::SingleParameterInstruction((
-            "MS".to_string(),
-            *op.theta().float()? / std::f64::consts::PI,
-            vec![*op.control() as u32, *op.target() as u32],
-        )))),
-        Operation::MolmerSorensenXX(op) => Ok(Some(AqtInstruction::SingleParameterInstruction((
-            "MS".to_string(),
-            0.5,
-            vec![*op.control() as u32, *op.target() as u32],
-        )))),
+        Operation::RotateZ(op) => Ok(Some(AqtInstruction::RZ {
+            phi: *op.theta().float()? / std::f64::consts::PI,
+            qubit: *op.qubit() as u32,
+        })),
+        Operation::RotateX(op) => Ok(Some(AqtInstruction::R {
+            phi: 0.0,
+            theta: *op.theta().float()? / std::f64::consts::PI,
+            qubit: *op.qubit() as u32,
+        })),
+        Operation::RotateY(op) => Ok(Some(AqtInstruction::R {
+            phi: 0.5,
+            theta: *op.theta().float()? / std::f64::consts::PI,
+            qubit: *op.qubit() as u32,
+        })),
+        Operation::PauliZ(op) => Ok(Some(AqtInstruction::RZ {
+            phi: 1.0,
+            qubit: *op.qubit() as u32,
+        })),
+        Operation::PauliX(op) => Ok(Some(AqtInstruction::R {
+            phi: 0.0,
+            theta: 1.0,
+            qubit: *op.qubit() as u32,
+        })),
+        Operation::PauliY(op) => Ok(Some(AqtInstruction::R {
+            phi: 0.5,
+            theta: 1.0,
+            qubit: *op.qubit() as u32,
+        })),
+        // Variable MSXX is different in qoqo and aqt
+        Operation::VariableMSXX(op) => Ok(Some(AqtInstruction::RXX {
+            qubits: vec![*op.control() as u32, *op.target() as u32],
+            theta: *op.theta().float()? / 2.0,
+        })),
+        Operation::MolmerSorensenXX(op) => Ok(Some(AqtInstruction::RXX {
+            qubits: vec![*op.control() as u32, *op.target() as u32],
+            theta: 0.5,
+        })),
+        // AQT device
+        Operation::PragmaRepeatedMeasurement(_op) => Ok(Some(AqtInstruction::MEASURE)),
+        Operation::MeasureQubit(_op) => Ok(Some(AqtInstruction::MEASURE)),
         _ => {
             if ALLOWED_OPERATIONS.contains(&operation.hqslang()) {
                 Ok(None)

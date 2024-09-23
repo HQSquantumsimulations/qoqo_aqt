@@ -10,6 +10,16 @@
 // express or implied. See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[cfg(test)]
-mod backend;
-mod devices;
+use roqoqo_aqt::{devices::AqtDevice, AqtApi};
+
+// Test the functions of the trait AqtApi
+#[test]
+fn test_aqt_api() {
+    let device = AqtDevice::new(2);
+    assert_eq!(device.number_qubits(), 2);
+    assert!(device.is_https());
+    assert_eq!(
+        device.remote_host(),
+        "https://arnica.aqt.eu/api/v1/".to_string()
+    )
+}

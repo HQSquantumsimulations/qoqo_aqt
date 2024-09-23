@@ -1,4 +1,4 @@
-// Copyright © 2021-2023 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2024 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -20,67 +20,63 @@ use test_case::test_case;
 /// Test SingleQubitGate alpha, beta, global phase
 #[test_case(
     operations::RotateZ::new(0,0.0.into()).into(),
-    AqtInstruction::SingleParameterInstruction((
-        "Z".to_string(),
-        0.0,
-        vec![0],
-    ));
+    AqtInstruction::RZ{
+        phi: 0.0,
+        qubit: 0,
+    };
     "RotateZ")]
 #[test_case(
         operations::RotateX::new(0,0.0.into()).into(),
-        AqtInstruction::SingleParameterInstruction((
-            "X".to_string(),
-            0.0,
-            vec![0],
-        ));
+        AqtInstruction::R{
+            phi: 0.0,
+            theta: 0.0,
+            qubit: 0,
+        };
         "RotateX")]
 #[test_case(
             operations::RotateY::new(0,0.0.into()).into(),
-            AqtInstruction::SingleParameterInstruction((
-                "Y".to_string(),
-                0.0,
-                vec![0],
-            ));
+            AqtInstruction::R{
+                phi: 0.5,
+                theta: 0.0,
+                qubit: 0,
+            };
             "RotateY")]
 #[test_case(
             operations::PauliZ::new(0).into(),
-            AqtInstruction::SingleParameterInstruction((
-                "Z".to_string(),
-                1.0,
-                vec![0],
-            ));
+            AqtInstruction::RZ{
+                phi: 1.0,
+                qubit: 0,
+            };
             "PauliZ")]
 #[test_case(
             operations::PauliX::new(0).into(),
-            AqtInstruction::SingleParameterInstruction((
-                "X".to_string(),
-                1.0,
-                vec![0],
-            ));
+            AqtInstruction::R{
+                phi: 0.0,
+                theta: 1.0,
+                qubit: 0,
+            };
             "PauliX")]
 #[test_case(
             operations::PauliY::new(0).into(),
-            AqtInstruction::SingleParameterInstruction((
-                "Y".to_string(),
-                1.0,
-                vec![0],
-            ));
+            AqtInstruction::R{
+                phi: 0.5,
+                theta: 1.0,
+                qubit: 0,
+            };
             "PauliY")]
 #[test_case(
             operations::MolmerSorensenXX::new(0,1).into(),
-            AqtInstruction::SingleParameterInstruction((
-                "MS".to_string(),
-                0.5,
-                vec![0,1],
-            ));
+            AqtInstruction::RXX{
+                theta: 0.5,
+                qubits: vec![0,1],
+            };
             "MS")]
 #[test_case(
             operations::VariableMSXX::new(0,1, 0.0.into()).into(),
-            AqtInstruction::SingleParameterInstruction((
-                "MS".to_string(),
-                0.0,
-                vec![0,1],
-            ));
+            AqtInstruction::RXX{
+                theta: 0.0,
+                qubits: vec![0,1],
+            };
             "VariableMS")]
 fn test_passing_interface(operation: operations::Operation, instruction: AqtInstruction) {
     let called = call_operation(&operation).unwrap().unwrap();
@@ -116,10 +112,9 @@ fn test_call_circuit() {
     let mut circuit = Circuit::new();
     circuit += operations::MolmerSorensenXX::new(0, 1);
     let res = call_circuit(&circuit).unwrap();
-    let res_comp = vec![AqtInstruction::SingleParameterInstruction((
-        "MS".to_string(),
-        0.5,
-        vec![0, 1],
-    ))];
+    let res_comp = vec![AqtInstruction::RXX {
+        theta: 0.5,
+        qubits: vec![0, 1],
+    }];
     assert_eq!(res, res_comp)
 }

@@ -1,6 +1,6 @@
 [package]
 name = "roqoqo-aqt"
-version = "0.7.0"
+version = "0.8.0"
 authors = ["HQS Quantum Simulations <info@quantumsimulations.de>"]
 license = "Apache-2.0"
 edition = "2018"
@@ -21,7 +21,7 @@ doctest = false
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-roqoqo = { version = "~1.14", features = ["serialize"] }
+roqoqo = { version = "~1.15", features = ["serialize"] }
 qoqo_calculator = { version = "~1.2" }
 
 reqwest = { version = "0.11", features = [
@@ -35,4 +35,6 @@ serde_urlencoded = "0.7"
 test-case = "3.0"
 
 [dev-dependencies]
-roqoqo-test = { version = "~1.14" }
+roqoqo-test = { version = "~1.15" }
+wiremock = { version = "~0.6"}
+tokio = { version = "1", features = ["full"] }
