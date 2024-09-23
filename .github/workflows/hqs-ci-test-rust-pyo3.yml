@@ -11,7 +11,6 @@ jobs:
 
   unittests:
     uses: HQSquantumsimulations/reusable_workflows/.github/workflows/reusable_unittests_rust_pyo3.yml@main
-    secrets: inherit
     with:
       # Run tests also on windows runners
       windows: true
@@ -19,6 +18,7 @@ jobs:
       macos: true
       rust_package_name: "roqoqo-aqt"
       test_code_coverage: false
+      secrets: inherit
 
   build_tests:
     uses: HQSquantumsimulations/reusable_workflows/.github/workflows/reusable_build_tests_rust_pyo3.yml@main
