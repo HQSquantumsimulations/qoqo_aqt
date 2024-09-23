@@ -1,0 +1,20 @@
+name: Check access token
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  check_for_my_secret:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if AQT_ACCESS_TOKEN is set
+        run: |
+          if [ -z "${{ secrets.AQT_ACCESS_TOKEN }}" ]; then
+            echo "AQT_ACCESS_TOKEN is not present or is empty!"
+            exit 1
+          else
+            echo "AQT_ACCESS_TOKEN is present."
+          fi
