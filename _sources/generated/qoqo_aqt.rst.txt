@@ -4,26 +4,9 @@
 .. automodule:: qoqo_aqt
 
    
-   
-   
-
-   
-   
-   
-
-   
-   
    .. rubric:: Classes
 
    .. autosummary::
    
       Backend
    
-   
-
-   
-   
-   
-
-
-
