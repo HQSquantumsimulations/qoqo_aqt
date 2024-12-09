@@ -12,8 +12,6 @@
 
 //! Integration test for public API of Basis rotation measurement
 
-use std::usize;
-
 use pyo3::prelude::*;
 use pyo3::Python;
 use qoqo_aqt::devices;
@@ -45,6 +43,6 @@ fn test_creating_device(number_qubits: usize) {
             .unwrap();
         assert_eq!(number_qubits, get_number_qubits);
         assert_eq!(remote_host.as_str(), "https://arnica.aqt.eu/api/v1/");
-        assert_eq!(is_https, true);
+        assert!(is_https);
     })
 }
