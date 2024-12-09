@@ -6,7 +6,6 @@ on:
     types: [created]
 
 jobs:
-
   deploy_cratesio:
     runs-on: ubuntu-latest
     steps:
@@ -23,6 +22,7 @@ jobs:
         cargo publish --manifest-path=roqoqo-aqt/Cargo.toml
         sleep 45
         cargo publish --manifest-path=qoqo_aqt/Cargo.toml
+
 # Build linux wheels and upload them to PyPi
   build_maturin_builds_linux:
     name: maturin_build-linux
