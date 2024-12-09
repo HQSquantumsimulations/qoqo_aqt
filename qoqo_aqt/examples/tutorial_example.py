@@ -1,4 +1,5 @@
 """Qoqo AQT tutorial example."""
+
 from qoqo import Circuit
 from qoqo import operations as ops
 from qoqo_aqt import devices, Backend
@@ -10,9 +11,7 @@ print(
 
 
 circuit = Circuit()
-circuit += ops.DefinitionBit(
-    "readout", length=2, is_output=True
-)  # Classical register for readout
+circuit += ops.DefinitionBit("readout", length=2, is_output=True)  # Classical register for readout
 circuit += ops.MolmerSorensenXX(control=0, target=1)  # Quantum operations
 circuit += ops.PragmaRepeatedMeasurement(
     readout="readout", number_measurements=100
