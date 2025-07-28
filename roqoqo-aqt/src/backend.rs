@@ -296,21 +296,20 @@ impl<T: AqtApi> Backend<T> {
             .bearer_auth(&self.access_token)
             .send()
             .map_err(|e| RoqoqoBackendError::NetworkError {
-                msg: format!("{:?}", e),
+                msg: format!("{e:?}"),
             })?;
         let status_code = client_resp.status();
         if status_code != reqwest::StatusCode::OK {
             return Err(RoqoqoBackendError::NetworkError {
                 msg: format!(
-                    "Failed to get resource details. Request to server failed with HTTP status code {:?}",
-                    status_code
+                    "Failed to get resource details. Request to server failed with HTTP status code {status_code:?}"
                 ),
             });
         };
         let resource_response: AqtResourceDetails = client_resp
             .json::<AqtResourceDetails>()
             .map_err(|e| RoqoqoBackendError::NetworkError {
-                msg: format!("{:?}", e),
+                msg: format!("{e:?}"),
             })?;
         Ok(resource_response)
     }
@@ -333,21 +332,20 @@ impl<T: AqtApi> Backend<T> {
             .json(&data)
             .send()
             .map_err(|e| RoqoqoBackendError::NetworkError {
-                msg: format!("{:?}", e),
+                msg: format!("{e:?}"),
             })?;
         let status_code = resp.status();
         if status_code != reqwest::StatusCode::OK {
             return Err(RoqoqoBackendError::NetworkError {
                 msg: format!(
-                    "Failed to post job to server. Request to server failed with HTTP status code {:?}",
-                    status_code
+                    "Failed to post job to server. Request to server failed with HTTP status code {status_code:?}"
                 ),
             });
         };
         let run_response: AqtRunResponse =
             resp.json::<AqtRunResponse>()
                 .map_err(|e| RoqoqoBackendError::NetworkError {
-                    msg: format!("{:?}", e),
+                    msg: format!("{e:?}"),
                 })?;
         Ok(run_response)
     }
@@ -366,22 +364,20 @@ impl<T: AqtApi> Backend<T> {
             .bearer_auth(&self.access_token)
             .send()
             .map_err(|e| RoqoqoBackendError::NetworkError {
-                msg: format!("{:?}", e),
+                msg: format!("{e:?}"),
             })?;
         let status_code = client_resp.status();
         if status_code != reqwest::StatusCode::OK {
             return Err(RoqoqoBackendError::NetworkError {
                 msg: format!(
-                    "Failed to get result from server. Request to server failed with HTTP status code {:?}",
-                    status_code
-                ),
+                    "Failed to get result from server. Request to server failed with HTTP status code {status_code:?}"),
             });
         }
         let run_response: AqtRunResponse =
             client_resp
                 .json::<AqtRunResponse>()
                 .map_err(|e| RoqoqoBackendError::NetworkError {
-                    msg: format!("second {:?}", e),
+                    msg: format!("second {e:?}"),
                 })?;
 
         Ok(run_response)
@@ -397,7 +393,7 @@ impl<T: AqtApi> EvaluatingBackend for Backend<T> {
             .https_only(self.device.is_https())
             .build()
             .map_err(|x| RoqoqoBackendError::NetworkError {
-                msg: format!("could not create https client {:?}", x),
+                msg: format!("could not create https client {x:?}"),
             })?;
         // check device resource
         let aqt_resources_details = self.get_resource_details(&client)?;
