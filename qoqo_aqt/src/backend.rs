@@ -59,9 +59,8 @@ impl BackendWrapper {
             PyTypeError::new_err(format!("Device Parameter is not AqtDevice {err:?}"))
         })?;
         Ok(Self {
-            internal: Backend::new(device, access_token).map_err(|err| {
-                PyRuntimeError::new_err(format!("No access token found {err:?}"))
-            })?,
+            internal: Backend::new(device, access_token)
+                .map_err(|err| PyRuntimeError::new_err(format!("No access token found {err:?}")))?,
         })
     }
 
