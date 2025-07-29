@@ -715,6 +715,7 @@ async fn api_backend_mock_test() {
 
 // Test backend run on AQT simulator with small circuit
 #[test]
+#[ignore = "API key problems, temporarily disabled"]
 fn api_backend_test_small() {
     let device = AqtDevice { number_qubits: 1 };
     let backend = Backend::new(device, None).unwrap();
@@ -736,6 +737,7 @@ fn api_backend_test_small() {
 
 // Test backend run on AQT simulator with small circuit
 #[test]
+#[ignore = "API key problems, temporarily disabled"]
 fn api_backend_test_small_two() {
     let device = AqtDevice { number_qubits: 1 };
     let backend = Backend::new(device, None).unwrap();
