@@ -152,7 +152,7 @@ async fn api_status_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 1,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
     let backend = Backend::new(mock_device, Some("DummyAccessToken".to_string())).unwrap();
     let (data, _, _) = backend
@@ -345,7 +345,7 @@ async fn api_request_body_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 1,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -376,7 +376,7 @@ async fn api_request_body_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 2,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
     let mut circuit = Circuit::new();
     circuit += DefinitionBit::new("ro".to_string(), 2, true);
@@ -433,7 +433,7 @@ async fn api_resources_error_mock_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 2,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -462,7 +462,7 @@ async fn api_resources_error_mock_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 10,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -605,7 +605,7 @@ async fn api_backend_mock_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 1,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -649,7 +649,7 @@ async fn api_backend_mock_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 1,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -691,7 +691,7 @@ async fn api_backend_mock_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 1,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
