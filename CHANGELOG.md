@@ -2,7 +2,9 @@
 
 This changelog track changes to the qoqo aqt project starting at version 0.3.0
 
-## Not released
+## Unreleased
+
+* Cleaned up the repository
 
 ## 0.8.0
 
