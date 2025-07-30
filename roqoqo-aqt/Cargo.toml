@@ -3,8 +3,8 @@ name = "roqoqo-aqt"
 version = "0.8.0"
 authors = ["HQS Quantum Simulations <info@quantumsimulations.de>"]
 license = "Apache-2.0"
-edition = "2018"
-rust-version = "1.56"
+edition = "2021"
+rust-version = "1.74"
 categories = ["science", "simulation"]
 homepage = "https://github.com/HQSquantumsimulations/qoqo_aqt"
 repository = "https://github.com/HQSquantumsimulations/qoqo_aqt"
@@ -22,7 +22,6 @@ doctest = false
 
 [dependencies]
 roqoqo = { version = "~1.15", features = ["serialize"] }
-qoqo_calculator = { version = "~1.2" }
 
 reqwest = { version = "0.11", features = [
     "json",
@@ -31,10 +30,9 @@ reqwest = { version = "0.11", features = [
 ] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-serde_urlencoded = "0.7"
 test-case = "3.0"
 
 [dev-dependencies]
 roqoqo-test = { version = "~1.15" }
-wiremock = { version = "~0.6"}
+wiremock = { version = "~0.6" }
 tokio = { version = "1", features = ["full"] }

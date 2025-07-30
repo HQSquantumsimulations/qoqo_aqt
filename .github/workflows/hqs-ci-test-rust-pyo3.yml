@@ -18,6 +18,7 @@ jobs:
       macos: true
       rust_package_name: "roqoqo-aqt"
       test_code_coverage: false
+      python_3_13: false
 
   build_tests:
     uses: HQSquantumsimulations/reusable_workflows/.github/workflows/reusable_build_tests_rust_pyo3.yml@main
@@ -28,3 +29,4 @@ jobs:
       macos: true
       py_interface_folder: "qoqo_aqt"
       has_python_tests: true
+      python_3_13: false

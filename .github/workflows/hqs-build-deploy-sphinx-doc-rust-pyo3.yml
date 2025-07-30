@@ -6,7 +6,6 @@ on:
     types: [created]
 
 jobs:
-
   publish_documentation:
     uses: HQSquantumsimulations/reusable_workflows/.github/workflows/reusable_publish_documentation_rust_sphinx.yml@main
     with: 

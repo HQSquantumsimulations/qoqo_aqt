@@ -1,4 +1,4 @@
-// Copyright © 2021-2024 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2025 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -11,10 +11,10 @@
 // limitations under the License.
 #![allow(clippy::borrow_deref_ref)]
 #![deny(missing_docs)]
-#![warn(private_intra_doc_links)]
-#![warn(missing_crate_level_docs)]
-#![warn(missing_doc_code_examples)]
-#![warn(private_doc_tests)]
+#![warn(rustdoc::private_intra_doc_links)]
+#![warn(rustdoc::missing_crate_level_docs)]
+#![warn(rustdoc::missing_doc_code_examples)]
+#![warn(rustdoc::private_doc_tests)]
 #![deny(missing_debug_implementations)]
 
 //! # roqoqo-aqt

@@ -1,4 +1,4 @@
-// Copyright © 2021-2024 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2025 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -152,7 +152,7 @@ async fn api_status_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 1,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
     let backend = Backend::new(mock_device, Some("DummyAccessToken".to_string())).unwrap();
     let (data, _, _) = backend
@@ -345,7 +345,7 @@ async fn api_request_body_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 1,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -376,7 +376,7 @@ async fn api_request_body_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 2,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
     let mut circuit = Circuit::new();
     circuit += DefinitionBit::new("ro".to_string(), 2, true);
@@ -433,7 +433,7 @@ async fn api_resources_error_mock_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 2,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -462,7 +462,7 @@ async fn api_resources_error_mock_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 10,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -605,7 +605,7 @@ async fn api_backend_mock_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 1,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -649,7 +649,7 @@ async fn api_backend_mock_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 1,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -691,7 +691,7 @@ async fn api_backend_mock_test() {
 
     let mock_device = MockAqtDevice {
         number_qubits: 1,
-        mock_host: format!("{}/mock/", uri),
+        mock_host: format!("{uri}/mock/"),
     };
 
     let mut circuit = Circuit::new();
@@ -715,6 +715,7 @@ async fn api_backend_mock_test() {
 
 // Test backend run on AQT simulator with small circuit
 #[test]
+#[ignore = "API key problems, temporarily disabled"]
 fn api_backend_test_small() {
     let device = AqtDevice { number_qubits: 1 };
     let backend = Backend::new(device, None).unwrap();
@@ -736,6 +737,7 @@ fn api_backend_test_small() {
 
 // Test backend run on AQT simulator with small circuit
 #[test]
+#[ignore = "API key problems, temporarily disabled"]
 fn api_backend_test_small_two() {
     let device = AqtDevice { number_qubits: 1 };
     let backend = Backend::new(device, None).unwrap();

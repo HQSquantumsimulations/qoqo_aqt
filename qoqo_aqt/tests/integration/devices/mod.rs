@@ -1,4 +1,4 @@
-// Copyright © 2021-2024 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2025 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -11,8 +11,6 @@
 // limitations under the License.
 
 //! Integration test for public API of Basis rotation measurement
-
-use std::usize;
 
 use pyo3::prelude::*;
 use pyo3::Python;
@@ -45,6 +43,6 @@ fn test_creating_device(number_qubits: usize) {
             .unwrap();
         assert_eq!(number_qubits, get_number_qubits);
         assert_eq!(remote_host.as_str(), "https://arnica.aqt.eu/api/v1/");
-        assert_eq!(is_https, true);
+        assert!(is_https);
     })
 }

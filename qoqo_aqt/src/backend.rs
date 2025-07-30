@@ -1,4 +1,4 @@
-// Copyright © 2021-2024 HQS Quantum Simulations GmbH. All Rights Reserved.
+// Copyright © 2021-2025 HQS Quantum Simulations GmbH. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 // in compliance with the License. You may obtain a copy of the License at
@@ -56,12 +56,11 @@ impl BackendWrapper {
     #[new]
     pub fn new(device: &Bound<PyAny>, access_token: Option<String>) -> PyResult<Self> {
         let device: AqtDevice = convert_into_device(device).map_err(|err| {
-            PyTypeError::new_err(format!("Device Parameter is not AqtDevice {:?}", err))
+            PyTypeError::new_err(format!("Device Parameter is not AqtDevice {err:?}"))
         })?;
         Ok(Self {
-            internal: Backend::new(device, access_token).map_err(|err| {
-                PyRuntimeError::new_err(format!("No access token found {:?}", err))
-            })?,
+            internal: Backend::new(device, access_token)
+                .map_err(|err| PyRuntimeError::new_err(format!("No access token found {err:?}")))?,
         })
     }
 
@@ -79,13 +78,12 @@ impl BackendWrapper {
     pub fn to_aqt_json(&self, circuit: &Bound<PyAny>) -> PyResult<String> {
         let circuit = convert_into_circuit(circuit).map_err(|err| {
             PyTypeError::new_err(format!(
-                "Circuit argument cannot be converted to qoqo Circuit {:?}",
-                err
+                "Circuit argument cannot be converted to qoqo Circuit {err:?}"
             ))
         })?;
         self.internal
             .to_aqt_json(circuit.iter())
-            .map_err(|err| PyRuntimeError::new_err(format!("Translating Circuit failed {:?}", err)))
+            .map_err(|err| PyRuntimeError::new_err(format!("Translating Circuit failed {err:?}")))
     }
 
     /// Return a copy of the Backend (copy here produces a deepcopy).
@@ -197,13 +195,12 @@ impl BackendWrapper {
     pub fn run_circuit(&self, circuit: &Bound<PyAny>) -> PyResult<Registers> {
         let circuit = convert_into_circuit(circuit).map_err(|err| {
             PyTypeError::new_err(format!(
-                "Circuit argument cannot be converted to qoqo Circuit {:?}",
-                err
+                "Circuit argument cannot be converted to qoqo Circuit {err:?}"
             ))
         })?;
         self.internal
             .run_circuit(&circuit)
-            .map_err(|err| PyRuntimeError::new_err(format!("Running Circuit failed {:?}", err)))
+            .map_err(|err| PyRuntimeError::new_err(format!("Running Circuit failed {err:?}")))
     }
 
     /// Run all circuits corresponding to one measurement with the AQT backend.
@@ -235,24 +232,21 @@ impl BackendWrapper {
             .call_method0("constant_circuit")
             .map_err(|err| {
                 PyTypeError::new_err(format!(
-                    "Cannot extract constant circuit from measurement {:?}",
-                    err
+                    "Cannot extract constant circuit from measurement {err:?}"
                 ))
             })?;
         let const_circuit = get_constant_circuit
             .extract::<Option<&PyAny>>()
             .map_err(|err| {
                 PyTypeError::new_err(format!(
-                    "Cannot extract constant circuit from measurement {:?}",
-                    err
+                    "Cannot extract constant circuit from measurement {err:?}"
                 ))
             })?;
 
         let constant_circuit = match const_circuit {
             Some(x) => convert_into_circuit(&x.as_borrowed()).map_err(|err| {
                 PyTypeError::new_err(format!(
-                    "Cannot extract constant circuit from measurement {:?}",
-                    err
+                    "Cannot extract constant circuit from measurement {err:?}"
                 ))
             })?,
             None => Circuit::new(),
@@ -260,14 +254,12 @@ impl BackendWrapper {
 
         let get_circuit_list = measurement.call_method0("circuits").map_err(|err| {
             PyTypeError::new_err(format!(
-                "Cannot extract circuit list from measurement {:?}",
-                err
+                "Cannot extract circuit list from measurement {err:?}"
             ))
         })?;
         let circuit_list = get_circuit_list.extract::<Vec<&PyAny>>().map_err(|err| {
             PyTypeError::new_err(format!(
-                "Cannot extract circuit list from measurement {:?}",
-                err
+                "Cannot extract circuit list from measurement {err:?}"
             ))
         })?;
 
@@ -276,8 +268,7 @@ impl BackendWrapper {
                 constant_circuit.clone()
                     + convert_into_circuit(&c.as_borrowed()).map_err(|err| {
                         PyTypeError::new_err(format!(
-                            "Cannot extract circuit of circuit list from measurement {:?}",
-                            err
+                            "Cannot extract circuit of circuit list from measurement {err:?}"
                         ))
                     })?,
             )
@@ -290,7 +281,7 @@ impl BackendWrapper {
         for circuit in run_circuits {
             let (tmp_bit_reg, tmp_float_reg, tmp_complex_reg) =
                 self.internal.run_circuit(&circuit).map_err(|err| {
-                    PyRuntimeError::new_err(format!("Running a circuit failed {:?}", err))
+                    PyRuntimeError::new_err(format!("Running a circuit failed {err:?}"))
                 })?;
 
             for (key, mut val) in tmp_bit_reg.into_iter() {
@@ -343,8 +334,7 @@ impl BackendWrapper {
             )
             .map_err(|err| {
                 PyTypeError::new_err(format!(
-                    "Measurement evaluate function could not be used: {:?}",
-                    err
+                    "Measurement evaluate function could not be used: {err:?}"
                 ))
             })?;
         get_expectation_values
