@@ -16,7 +16,7 @@ This repository contains two components:
 ## qoqo_aqt
 
 [![Documentation Status](https://img.shields.io/badge/docs-documentation-green)](https://hqsquantumsimulations.github.io/qoqo_aqt/)
-[![GitHub Workflow Status](https://github.com/HQSquantumsimulations/qoqo_aqt/workflows/ci_tests/badge.svg)](https://github.com/HQSquantumsimulations/qoqo_aqt/actions)
+[![GitHub Workflow Status](https://github.com/HQSquantumsimulations/qoqo_aqt/actions/workflows/hqs-build-deploy-rust-pyo3.yml/badge.svg)](https://github.com/HQSquantumsimulations/qoqo_aqt/actions/workflows/hqs-build-deploy-rust-pyo3.yml)
 [![PyPI](https://img.shields.io/pypi/v/qoqo_aqt)](https://pypi.org/project/qoqo_aqt/)
 ![PyPI - License](https://img.shields.io/github/license/HQSquantumsimulations/qoqo_aqt?label=license)
 [![PyPI - Format](https://img.shields.io/pypi/format/qoqo_aqt)](https://pypi.org/project/qoqo_aqt/)
@@ -24,6 +24,8 @@ This repository contains two components:
 AQT-backend for the qoqo quantum toolkit by [HQS Quantum Simulations](https://quantumsimulations.de).
 
 A short tutorial can be found in Tutorial_qoqo.md in the git repository.
+
+The API Documentation (Python) can be found [here](https://hqsquantumsimulations.github.io/qoqo_aqt/generated/qoqo_aqt.html).
 
 ### Installation
 
@@ -50,13 +52,15 @@ A source distribution now exists but requires a Rust install with a rust version
 ## roqoqo-aqt
 
 [![Crates.io](https://img.shields.io/crates/v/roqoqo-aqt)](https://crates.io/crates/roqoqo-aqt)
-[![GitHub Workflow Status](https://github.com/HQSquantumsimulations/qoqo_mock/workflows/ci_tests/badge.svg)](https://github.com/HQSquantumsimulations/qoqo_aqt/actions)
+[![GitHub Workflow Status](https://github.com/HQSquantumsimulations/qoqo_aqt/actions/workflows/hqs-build-deploy-rust-pyo3.yml/badge.svg)](https://github.com/HQSquantumsimulations/qoqo_aqt/actions/workflows/hqs-build-deploy-rust-pyo3.yml)
 [![docs.rs](https://img.shields.io/docsrs/roqoqo-aqt)](https://docs.rs/roqoqo-aqt/)
 ![Crates.io](https://img.shields.io/crates/l/roqoqo-aqt)
 
 AQT-Backend for the roqoqo quantum toolkit by [HQS Quantum Simulations](https://quantumsimulations.de).
 
 A short tutorial can be found in Tutorial_roqoqo.md in the git repository.
+
+The API Documentation (Rust) can be found [here](https://docs.rs/roqoqo-aqt/).
 
 ## General Notes
 
