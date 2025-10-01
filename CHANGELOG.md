@@ -5,6 +5,7 @@ This changelog track changes to the qoqo aqt project starting at version 0.3.0
 ## Unreleased
 
 * Cleaned up the repository
+* Updated minimum supported Python version from 3.9 to 3.10.
 
 ## 0.8.0
 
